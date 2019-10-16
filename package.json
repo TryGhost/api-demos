@@ -21,6 +21,7 @@
     "sinon": "7.5.0"
   },
   "dependencies": {
+    "@tryghost/admin-api": "^1.0.0",
     "bluebird": "^3.7.1",
     "ghost-ignition": "^3.1.0",
     "lodash": "^4.17.15"
