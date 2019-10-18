@@ -24,6 +24,7 @@
     "@tryghost/admin-api": "^1.0.0",
     "bluebird": "^3.7.1",
     "ghost-ignition": "^3.1.0",
-    "lodash": "^4.17.15"
+    "lodash": "^4.17.15",
+    "lorem-ipsum": "2.0.3"
   }
 }
