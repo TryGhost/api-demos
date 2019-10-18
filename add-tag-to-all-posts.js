@@ -23,23 +23,22 @@ const api = new GhostAdminAPI({
     url,
     key,
     version: 'v2'
-  });
+});
 
 (async function main() {
     try {
         console.log(`Adding tag ${tag} to ${url}`);
 
-        const tagToAdd = await api.tags.read({ slug: tag });
+        const tagToAdd = await api.tags.read({slug: tag});
 
         console.log('Found tag', tagToAdd);
 
         // Admin API automatically includes tags and authors
         // WARNING: If the site is really big (1000s of posts) maybe do this paginated
-        const allPosts = await api.posts.browse({ limit: 'all' });
+        const allPosts = await api.posts.browse({limit: 'all'});
 
         // convert our list of posts, to a list of promises for requests to the api
         const result = await Promise.mapSeries(allPosts, async (post) => {
-
             // Add the tag to the post
             post.tags.push(tagToAdd);
 
@@ -56,7 +55,6 @@ const api = new GhostAdminAPI({
         });
 
         console.log(`Updated ${result.length} posts`);
-
     } catch (err) {
         console.error('There was an error', require('util').inspect(err, false, null));
         process.exit(1);
