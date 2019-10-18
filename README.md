@@ -1,16 +1,13 @@
-# Admin Api Experiments
+# API Experiments
 
 ## Install
 
+1. `git clone` this repo & `cd` into it as usual
+2. Run `yarn` to install top-level dependencies.
 
 ## Usage
 
 See individual scripts for usage
-
-## Develop
-
-1. `git clone` this repo & `cd` into it as usual
-2. Run `yarn` to install top-level dependencies.
 
 
 # Copyright & License
