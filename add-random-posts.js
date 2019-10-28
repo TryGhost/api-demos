@@ -53,8 +53,15 @@ const api = new GhostAdminAPI({
                     suffix: '\n', // Line ending, defaults to "\n" or "\r\n" (win32)
                     units: 'paragraphs', // paragraph(s), "sentence(s)", or "word(s)"
                     words: undefined // Array of words to draw from
+                }),
+                meta_title: loremIpsum({
+                    count: 4,
+                    units: 'words'
+                }),
+                meta_description: loremIpsum({
+                    count: 2,
+                    units: 'sentences'
                 })
-
             };
 
             posts.push(post);
