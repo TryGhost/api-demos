@@ -1,0 +1,42 @@
+<html>
+
+<head>
+    <script>
+        const url = 'https://hannah.ghost.io/ghost/api/v2/admin';
+        const user = 'erisds+api@gmail.com';
+        const pass = 'list-charisma-showboat-news';
+
+        (async function main(){
+
+        let result = await fetch(`${url}/session`, {
+            method: "post",
+            headers: {
+                "content-type": "application/json",
+                "Origin": "https://localhost"
+            },
+            credentials: 'include',
+            body: JSON.stringify({
+            username: user,
+            password: pass,
+            mode: 'cors'
+            })
+        });
+
+        console.log(result);
+
+        let me = await fetch(`${url}/users/me`, {
+            method: "get",
+            credentials: "include",
+            headers: {
+                "content-type": "application/json",
+                "Origin": "https://localhost"
+            }
+        });
+
+        console.log(me);
+
+    }());
+</script>
+</head>
+<body><h1>Hello world</h1></body>
+</html>
