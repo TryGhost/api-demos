@@ -9,7 +9,7 @@
   version: "v3"
 });
 
-// fetch 5 posts, including related tags and authors
+// Fetch a single post by slug
 api.posts
     .read({slug: 'publishing-options'})
     .then((post) => {
