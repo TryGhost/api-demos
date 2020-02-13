@@ -1,0 +1,28 @@
+<html>
+
+<head>
+    <script src="https://unpkg.com/@tryghost/content-api@latest/umd/content-api.min.js"></script>
+    <script>
+       const api = new GhostContentAPI({
+  url: 'https://demo.ghost.io',
+  key: '22444f78447824223cefc48062',
+  version: "v3"
+});
+
+// fetch 5 posts, including related tags and authors
+api.posts
+    .read({slug: 'publishing-options'})
+    .then((post) => {
+        console.log(post);
+        document.querySelector('#result').textContent = JSON.stringify(post);
+    })
+    .catch((err) => {
+        console.error(err);
+    });
+</script>
+</head>
+<body>
+    <h1>Hello world</h1>
+    <div id="result"></div>
+</body>
+</html>
