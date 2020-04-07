@@ -24,9 +24,18 @@ const api = new GhostAdminAPI({
 
 (async function main() {
     try {
-        const allMembers = await api.members.browse({limit: 'all'});
+        const allMembers = await api.members.browse({limit: '3'});
+        const deletePromises = [];
 
-        console.log('got members', allMembers);
+        allMembers.forEach((member) => {
+            // Comped members should have a subscription, but just in case
+            if (member.comped || member.stripe.subscriptions.length === 0) {
+                deletePromises.push(api.members.delete({id: member.id}));
+            }
+        });
+
+        await Promise
+            .all(deletePromises);
     } catch (err) {
         console.error('There was an error', require('util').inspect(err, false, null));
         process.exit(1);
