@@ -1,11 +1,11 @@
 /**
- * Add a tag to every post
+ * Find and replace in all posts
  *
- * Note: Assumes you already have the tag created
+ * TODO: you must edit this script to adjust what is being found and replaced!
  *
  * Usage:
  *
- * node add-tag-to-all-posts.js https://blah.ghost.io ADMIN_API_KEY slug-of-tag-to-add
+ * node all-posts-find-and-replace.js https://blah.ghost.io ADMIN_API_KEY
  */
 
 if (process.argv.length < 4) {
