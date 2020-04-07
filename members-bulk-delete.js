@@ -29,7 +29,7 @@ const api = new GhostAdminAPI({
 
         allMembers.forEach((member) => {
             // Comped members should have a subscription, but just in case
-            if (member.comped || member.stripe.subscriptions.length === 0) {
+            if (!member.comped && member.stripe.subscriptions.length === 0) {
                 console.log('deleting', member.email);
                 deletePromises.push(api.members.delete({id: member.id}));
             }
