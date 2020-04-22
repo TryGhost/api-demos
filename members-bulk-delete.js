@@ -3,20 +3,20 @@
  *
  * Usage:
  *
- * node members-bulk-delete.js https://blah.ghost.io ADMIN_API_KEY [doDelete]
+ * node members-bulk-delete.js https://blah.ghost.io ADMIN_API_KEY [true]
  *
  * If you run this script with just a URL and key, it will do a dry run
  * If you run this script with an extra argument (e.g. true) the deletions will be executed
  */
 
 if (process.argv.length < 4) {
-    console.error('Missing an argument');
+    console.error('Missing an argument. Requires API_URL API_KEY [confirm]');
     process.exit(1);
 }
 
 const url = process.argv[2];
 const key = process.argv[3];
-const doDelete = process.argv[4];
+const doDelete = process.argv[4] === 'true';
 
 if (!doDelete) {
     console.log('Dry run...');
@@ -33,41 +33,53 @@ const api = new GhostAdminAPI({
 });
 
 (async function main() {
+    if (doDelete) {
+        console.log('REAL Run');
+    } else {
+        console.log('Dry Run - nothing will be deleted');
+    }
+
+    console.log('API URL', url);
+    console.log('API KEY', key);
+    // Give the user time to read...
+    await Promise.delay(1000);
+
     try {
         const allMembers = await api.members.browse({limit: 'all'});
-
-        console.log(allMembers);
-
+        const keep = [];
         const freeMembers = allMembers.filter((member) => {
             // Comped members should have a subscription, but just in case
             if (!member.comped && member.stripe.subscriptions.length === 0) {
-                console.log('Will delete', member.email);
                 return true;
             }
 
-            console.log('Will keep', member.email);
+            keep.push(member.email);
 
             return false;
         });
 
-        console.log(freeMembers.length, 'Members will be deleted');
+        console.log(freeMembers.length, 'Members will be deleted out of', allMembers.length, 'total members. This will leave', keep.length, 'members');
 
-        const result = await Promise.mapSeries(freeMembers, async (member) => {
-            console.log('Deleting', member.email);
-            let result = {};
+        console.log('Keeping:');
+        console.log(keep);
 
-            // Call the API
-            if (doDelete) {
-                result = await api.members.delete({id: member.id});
-            }
+        if (doDelete) {
+            const result = await Promise.mapSeries(freeMembers, async (member) => {
+                console.log('Deleting', member.email);
 
-            // Add a delay but return the original result
-            return Promise.delay(50).return(result);
-        });
+                // Call the API
+                const result = await api.members.delete({id: member.id});
+                // Add a delay but return the original result
+                return Promise.delay(50).return(result);
+            });
 
-        console.log('Deleted', result.length, 'members');
+            console.log('Deleted', result.length, 'members');
+        }
     } catch (err) {
         console.error('There was an error', require('util').inspect(err, false, null));
+        if (err.type === 'NotFoundError') {
+            console.log('Resource not found - is members actually enabled?');
+        }
         process.exit(1);
     }
 }());
