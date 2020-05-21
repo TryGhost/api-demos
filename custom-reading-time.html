@@ -1,0 +1,71 @@
+<html>
+
+<head>
+<script src="https://unpkg.com/@tryghost/content-api@latest/umd/content-api.min.js"></script>
+<script src="https://unpkg.com/@tryghost/helpers@1.1.27/umd/helpers.min.js"></script>
+<script>
+    const api = new GhostContentAPI({
+        url: 'https://demo.ghost.io',
+        key: '22444f78447824223cefc48062',
+        version: "v3"
+    });
+
+    const {readingTime} = GhostHelpers;
+
+    // Example 1: Calculate reading time for a single post page
+
+    // Step 1: grab the slug for the post
+    // This might be grabbed from a html data element on the page, or from the URL e.g. window.location.pathname.match(/\/([^\/]+)\/$/)[1];
+    let postSlug = 'publishing-options';
+
+    // Step 2: Make an API request to get the data we need
+    api.posts.read({slug: postSlug, fields: 'html,feature_image'})
+        .then((post) => {
+            // Step 3: Manipulate the HTML and remove any content you don't want included
+            post.html = post.html.substring(0, post.html.length - 1000);
+
+            // Step 4: Generate the reading time string passing our modified post to the readingTime helper
+            let customTime = readingTime(post);
+
+            // Step 5: Insert the string into the page
+            document.querySelector('#single-result').textContent = customTime;
+        })
+        .catch((err) => {
+            console.error(err);
+        });
+
+    // Example 2: Calculate reading time for all posts on an index page
+
+    // Step 1: grab the slugs for all posts in the page that have reading time
+    // Something like document.querySelectorAll('.post-card').forEach(link => { console.log(link.href.match(/\/([^\/]*)\/$/)[1]) });
+    let postSlugs = ['welcome','publishing-options','admin-settings'];
+
+    // Step 2: Make an API request to get the data we need
+    // We can fetch all posts at once this way
+    api.posts.browse({filter: `slug:[${postSlugs.join(',')}]`, fields: 'title,html,feature_image'})
+        .then((posts) => {
+            posts.forEach(post => {
+                // Step 3: Manipulate the HTML and remove any content you don't want included
+                post.html = post.html.substring(0, post.html.length - 1000);
+
+                // Step 4: Generate the reading time string passing our modified post to the readingTime helper
+                let customTime = readingTime(post);
+
+                // Step 5: Insert the string into the page
+                document.querySelector('#multi-result').innerHTML += `${post.title} - ${customTime} <br>`;
+            });
+
+        })
+        .catch((err) => {
+            console.error(err);
+        });
+</script>
+</head>
+<body>
+    <h2>Single Post - Publishing Options</h2>
+    <div id="single-result"></div>
+
+    <h2>Multi Post</h2>
+    <div id="multi-result"></div>
+</body>
+</html>
