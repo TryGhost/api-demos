@@ -1,9 +1,9 @@
 {
   "name": "admin-api-experiments",
   "version": "0.0.0",
+  "license": "MIT",
   "repository": "git@github.com:TryGhost/admin-api-experiments.git",
   "author": "Ghost Foundation",
-  "private": true,
   "main": "app.js",
   "scripts": {
     "dev": "echo \"Implement me!\"",

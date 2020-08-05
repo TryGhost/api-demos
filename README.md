@@ -9,9 +9,6 @@
 
 See individual scripts for usage
 
-
 # Copyright & License
 
-Copyright (c) 2019 Ghost Foundation. All rights reserved.
-
-This code is considered closed-source and not for distribution. There is no opensource license associated with this project.
+Copyright (c) 2019-2020 Ghost Foundation - Released under the [MIT license](LICENSE).
