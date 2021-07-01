@@ -1,4 +1,6 @@
-/**
+/** 
+ * Warning: This script uses an experimental alpha feature
+ *
  * Write Posts with customized mobiledocs
  *
  * An example of how to use the admin API to write posts from mobiledoc focused on content gating
