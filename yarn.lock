@@ -279,19 +279,19 @@
   resolved "https://registry.yarnpkg.com/@sinonjs/text-encoding/-/text-encoding-0.7.1.tgz#8da5c6530915653f3a1f38fd5f101d8c3f8079c5"
   integrity sha512-+iTbntw2IZPb/anVDbypzfQa+ay64MW0Zo8aJ8gZPWMMK6/OubMVb6lUPMagqjOPnmtauXnFCACVl3O7ogjeqQ==
 
-"@tryghost/admin-api@^1.4.0":
-  version "1.4.3"
-  resolved "https://registry.yarnpkg.com/@tryghost/admin-api/-/admin-api-1.4.3.tgz#3350b41292b749d52735457834df9f17aeddc013"
-  integrity sha512-Knrp51ZhBrWx0s1DCJi4bj7IMakEnmZZQZ6k+PZVjVC7ECuvzanAIUCuJFoRXoKq/W98ifu9fyPOfkrhX+0SQg==
+"@tryghost/admin-api@1.11.2":
+  version "1.11.2"
+  resolved "https://registry.yarnpkg.com/@tryghost/admin-api/-/admin-api-1.11.2.tgz#f54f7189470593643a16751b7c88baa4cf560990"
+  integrity sha512-Hd7Mym/RmWvbsrYzEWh5HEjsHQbMWoJin+pG+dbTClusvyKIH9AosEieJ7QXUfPv3wkU6FlAF/bT1ch4G2T7Ig==
   dependencies:
     axios "^0.21.1"
-    form-data "^3.0.0"
+    form-data "^4.0.0"
     jsonwebtoken "^8.4.0"
 
-"@tryghost/content-api@^1.5.1":
-  version "1.5.13"
-  resolved "https://registry.yarnpkg.com/@tryghost/content-api/-/content-api-1.5.13.tgz#c3059e98fb7504c571a4fcce70192e940386bc29"
-  integrity sha512-wH8fj9cixj/Wb4c1BqQTrlY1tbq2RxpKsUzVo6qf+xW1LRwwEN5Z7c4cA07bUoyFrJ70ii1Xqbm2WG11+n09zg==
+"@tryghost/content-api@1.9.1":
+  version "1.9.1"
+  resolved "https://registry.yarnpkg.com/@tryghost/content-api/-/content-api-1.9.1.tgz#db4490b918b0e5b94da8ecf5f67dc32110d109aa"
+  integrity sha512-kWnhVxonWzcm3IiLaTXwA/Elnpt3BLaMpRUGUkGaFuGksz4HEnMKD+uP3AueEbV3XWx1ntY4Vvblp0kbIZRPWg==
   dependencies:
     axios "^0.21.1"
 
@@ -968,10 +968,10 @@ follow-redirects@^1.14.0:
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.14.5.tgz#f09a5848981d3c772b5392309778523f8d85c381"
   integrity sha512-wtphSXy7d4/OR+MvIFbCVBDzZ5520qV8XfPklSN5QtxuMUJZ+b0Wnst1e1lCDocfzuCkHqj8k0FpZqO+UIaKNA==
 
-form-data@^3.0.0:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/form-data/-/form-data-3.0.1.tgz#ebd53791b78356a99af9a300d4282c4d5eb9755f"
-  integrity sha512-RHkBKtLWUVwd7SqRIvCZMEvAMoGUp0XU+seQiZejj0COz3RI3hWP4sCv3gZWWLjJTd7rGwcsF5eKZGii0r/hbg==
+form-data@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/form-data/-/form-data-4.0.0.tgz#93919daeaf361ee529584b9b31664dc12c9fa452"
+  integrity sha512-ETEklSGi5t0QMZuiXoA/Q6vcnxcLQP5vdugSpuAyi6SVGi2clPPp+xgEhuMaHC+zGgn31Kd235W35f7Hykkaww==
   dependencies:
     asynckit "^0.4.0"
     combined-stream "^1.0.8"
