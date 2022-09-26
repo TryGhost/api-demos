@@ -336,9 +336,9 @@
     jsonwebtoken "^8.4.0"
 
 "@tryghost/content-api@^1.5.1":
-  version "1.11.3"
-  resolved "https://registry.yarnpkg.com/@tryghost/content-api/-/content-api-1.11.3.tgz#38c1d97a12cfa4a2c398e2e6fb206af59ef1fa97"
-  integrity sha512-rmNE5nIlK3fY/TuFRX4EkdJ2tpRs/jEH8TnZv96rdl+9vVf/MMFzfR/5yQjxqAGuxPtE+7J2pE7Qx4n80NiscA==
+  version "1.11.4"
+  resolved "https://registry.yarnpkg.com/@tryghost/content-api/-/content-api-1.11.4.tgz#4a1afa6a7580eb414d82ce6bd3ca712126927fbc"
+  integrity sha512-1ShIj8i37rR/9gaenRiaGvPNAU3jAuvViD64mmVxE1cedXJjpqbaOLM8lFWaVuGUafDQrfo5tv57FN6ac51QeQ==
   dependencies:
     axios "^0.27.0"
 
@@ -540,9 +540,9 @@ camelcase@^6.0.0:
   integrity sha512-Gmy6FhYlCY7uOElZUSbxo2UCDH8owEk996gkbrpsgGtrJLM3J7jGxl9Ic7Qwwj4ivOE5AWZWRMecDdF7hqGjFA==
 
 caniuse-lite@^1.0.30001400:
-  version "1.0.30001402"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001402.tgz#aa29e1f47f5055b0d0c07696a67b8b08023d14c8"
-  integrity sha512-Mx4MlhXO5NwuvXGgVb+hg65HZ+bhUYsz8QtDGDo2QmaJS2GBX47Xfi2koL86lc8K+l+htXeTEB/Aeqvezoo6Ew==
+  version "1.0.30001412"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001412.tgz#30f67d55a865da43e0aeec003f073ea8764d5d7c"
+  integrity sha512-+TeEIee1gS5bYOiuf+PS/kp2mrXic37Hl66VY6EAfxasIk5fELTktK2oOezYed12H8w7jt3s512PpulQidPjwA==
 
 chalk@^2.0.0:
   version "2.4.2"
@@ -724,9 +724,9 @@ ecdsa-sig-formatter@1.0.11:
     safe-buffer "^5.0.1"
 
 electron-to-chromium@^1.4.251:
-  version "1.4.254"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.254.tgz#c6203583890abf88dfc0be046cd72d3b48f8beb6"
-  integrity sha512-Sh/7YsHqQYkA6ZHuHMy24e6TE4eX6KZVsZb9E/DvU1nQRIrH4BflO/4k+83tfdYvDl+MObvlqHPRICzEdC9c6Q==
+  version "1.4.261"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.261.tgz#31f14ad60c6f95bec404a77a2fd5e1962248e112"
+  integrity sha512-fVXliNUGJ7XUVJSAasPseBbVgJIeyw5M1xIkgXdTSRjlmCqBbiSTsEdLOCJS31Fc8B7CaloQ/BFAg8By3ODLdg==
 
 elliptic@^6.5.4:
   version "6.5.4"
