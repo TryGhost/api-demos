@@ -336,9 +336,9 @@
   integrity sha512-sXXKG+uL9IrKqViTtao2Ws6dy0znu9sOaP1di/jKGW1M6VssO8vlpXCQcpZ+jisQ1tTFAC5Jo/EOzFbggBagFQ==
 
 "@tryghost/admin-api@^1.7.0":
-  version "1.13.2"
-  resolved "https://registry.yarnpkg.com/@tryghost/admin-api/-/admin-api-1.13.2.tgz#acb6d9bc02f43ee6ad376055f954286fe23d0f84"
-  integrity sha512-H7zTOeoP7hSBca5QvhB0OcjjvsJHRc0uPB/kKMt09mzgf1BAAIo6L0S9QKVbMp5D7ko1a7MtnFlBOKIGO43c6g==
+  version "1.13.4"
+  resolved "https://registry.yarnpkg.com/@tryghost/admin-api/-/admin-api-1.13.4.tgz#8a0a174db49d530b45169dab24f97ab15414f3c3"
+  integrity sha512-ibcn/TwetaDtIfj7tz3gnhiH9bPrItDtIrbHdYknwF6mjxL9mQ1bLYSkZ0f+y8za9MjHjdX7Opqdi1SgUWpM5w==
   dependencies:
     axios "^0.27.0"
     form-data "^4.0.0"
