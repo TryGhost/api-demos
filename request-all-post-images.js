@@ -6,8 +6,8 @@
  * 
  * Usage:
  *
- * node force-rerender.js https://blah.ghost.io ADMIN_API_KEY - dry run
- * node force-rerender.js https://blah.ghost.io ADMIN_API_KEY true - live run
+ * node request-all-post-images.js http://localhost:2368 ADMIN_API_KEY - dry run
+ * node request-all-post-images.js http://localhost:2368 ADMIN_API_KEY true - live run
  */
 
 if (process.argv.length < 4) {
