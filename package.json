@@ -24,7 +24,7 @@
     "@tryghost/admin-api": "^1.7.0",
     "@tryghost/content-api": "^1.5.1",
     "bluebird": "^3.7.1",
-    "jwks-client": "^1.4.1",
+    "jwks-client": "^2.0.0",
     "lodash": "^4.17.15",
     "lorem-ipsum": "2.0.4"
   }
