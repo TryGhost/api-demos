@@ -16,7 +16,7 @@
   "devDependencies": {
     "eslint": "7.32.0",
     "eslint-plugin-ghost": "2.11.0",
-    "mocha": "8.4.0",
+    "mocha": "11.7.5",
     "should": "13.2.3",
     "sinon": "11.1.2"
   },
