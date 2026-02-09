@@ -315,7 +315,7 @@
     "@sinonjs/commons" "^3.0.1"
     type-detect "^4.1.0"
 
-"@tryghost/admin-api@^1.7.0":
+"@tryghost/admin-api@1.14.4":
   version "1.14.4"
   resolved "https://registry.yarnpkg.com/@tryghost/admin-api/-/admin-api-1.14.4.tgz#41d770cd8f8d4c1daf02dc4e70ad96cd52e089ff"
   integrity sha512-rs7SlEo9InJQoxmUzY0siZQ0uRxTzKBhLj7Rys5hxYnmvtet4quHU4ZK2M4qpMKT9SBs7IYGXlboA7MsYoZTxA==
@@ -324,7 +324,7 @@
     form-data "^4.0.0"
     jsonwebtoken "^9.0.2"
 
-"@tryghost/content-api@^1.5.1":
+"@tryghost/content-api@1.12.3":
   version "1.12.3"
   resolved "https://registry.yarnpkg.com/@tryghost/content-api/-/content-api-1.12.3.tgz#3a7b3197ea22e07cadbad1831ef4bf75d59cce88"
   integrity sha512-F4khawkJ5nTavXsvs2svlRef4JUYT8Aq5nRM2nz2UhJ7v+PUq0eBYXKQClSMKLVWRNLxJNxkdmBdibusKaJrOA==
