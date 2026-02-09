@@ -1,17 +1,8 @@
-
-<p align="center">
-  <a href="https://ghost.org">
-    <img src="https://user-images.githubusercontent.com/120485/43974508-b64b2fe8-9cd2-11e8-8e58-707254b8817c.png" width="140px" alt="Ghost" />
-  </a>
-</p>
-<p align="center">
-    <a href="https://ghost.org/docs/api/v3/">API Reference</a> |
-    <a href="https://ghost.org/docs/api/v3/content/">Content API</a> |
-    <a href="https://ghost.org/docs/api/v3/admin/">Admin API</a> |
-    <a href="https://ghost.org/docs/api/v2/javascript/">JavaScript Client Libraries</a> |
-    <a href="https://ghost.org/docs/api/v3/javascript/sdk/">JavaScript SDK</a>
-</p>
-<p align="center">Love open source? We're hiring <a href="https://careers.ghost.org/product-engineer-node-js/">Node.js Engineers</a> to work on Ghost full-time</p>
+<a href="https://ghost.org/docs/api/v3/">API Reference</a> |
+<a href="https://ghost.org/docs/api/v3/content/">Content API</a> |
+<a href="https://ghost.org/docs/api/v3/admin/">Admin API</a> |
+<a href="https://ghost.org/docs/api/v2/javascript/">JavaScript Client Libraries</a> |
+<a href="https://ghost.org/docs/api/v3/javascript/sdk/">JavaScript SDK</a>
 
 # API Demos
 
