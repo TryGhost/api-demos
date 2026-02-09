@@ -1,5 +1,7 @@
 {
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "@tryghost:quietJS"
-  ]
+    "github>tryghost/renovate-config"
+  ],
+  "automerge": true
 }
