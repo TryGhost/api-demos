@@ -14,7 +14,7 @@
     "ship": "STATUS=$(git status --porcelain); echo $STATUS; if [ -z \"$STATUS\" ]; then yarn version && git push --follow-tags; fi"
   },
   "devDependencies": {
-    "eslint": "7.32.0",
+    "eslint": "9.39.2",
     "eslint-plugin-ghost": "2.11.0",
     "mocha": "8.4.0",
     "should": "13.2.3",
