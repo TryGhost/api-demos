@@ -18,7 +18,7 @@
     "eslint-plugin-ghost": "3.4.4",
     "mocha": "11.7.5",
     "should": "13.2.3",
-    "sinon": "21.0.1"
+    "sinon": "21.0.2"
   },
   "dependencies": {
     "@tryghost/admin-api": "1.14.6",
