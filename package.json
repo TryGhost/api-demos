@@ -21,8 +21,8 @@
     "sinon": "21.0.2"
   },
   "dependencies": {
-    "@tryghost/admin-api": "1.14.6",
-    "@tryghost/content-api": "1.12.5",
+    "@tryghost/admin-api": "1.14.7",
+    "@tryghost/content-api": "1.12.6",
     "bluebird": "3.7.2",
     "jwks-client": "2.1.0",
     "lodash": "4.17.23",
