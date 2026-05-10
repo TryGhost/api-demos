@@ -518,11 +518,6 @@ combined-stream@^1.0.8:
   dependencies:
     delayed-stream "~1.0.0"
 
-commander@^9.3.0:
-  version "9.5.0"
-  resolved "https://registry.yarnpkg.com/commander/-/commander-9.5.0.tgz#bc08d1eb5cedf7ccb797a96199d41c7bc3e60d30"
-  integrity sha512-KRs7WVDKg86PWiuAqhDrAQnTXZKraVcCc6vFdL14qrZ/DcWwuRo7VoiYXalXO7S5GKpqYiVEwCbgFDfxNHKJBQ==
-
 content-tag@^2.0.1:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/content-tag/-/content-tag-2.0.3.tgz#52b72285256ae0aa49e86b1b5923764df472d61c"
@@ -1430,12 +1425,10 @@ log-symbols@^4.1.0:
     chalk "^4.1.0"
     is-unicode-supported "^0.1.0"
 
-lorem-ipsum@2.0.10:
-  version "2.0.10"
-  resolved "https://registry.yarnpkg.com/lorem-ipsum/-/lorem-ipsum-2.0.10.tgz#a8afac6d63dc18af5ae362c85339bd697c932543"
-  integrity sha512-+Vju4QAN6l2SX9tQ4Dm+mg1qgxf8IzqFh35h/dtFLofW+QHKunMjANfuhlx3vO9+LFetGRtqzvOlpw+1ysDeTw==
-  dependencies:
-    commander "^9.3.0"
+lorem-ipsum@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/lorem-ipsum/-/lorem-ipsum-3.0.0.tgz#340adeda1613736a62265e1fac7c5d86255047f9"
+  integrity sha512-FYUViKFk1p8OJWrDFtpyvCW1l92E7vWA3g/tmpvdrLmyoLti9aqD7/xeSEXu/e2oi/zG/TL8I9eZsrh+t1NWbw==
 
 lower-case@^2.0.2:
   version "2.0.2"
