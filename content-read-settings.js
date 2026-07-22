@@ -7,7 +7,7 @@
  * GHOST_CONTENT_API_KEY=your_key node content-read-settings.js https://blah.ghost.io
  */
 
-if (process.argv.length < 3) {
+if (process.argv.length !== 3) {
     console.error('Missing an argument');
     process.exit(1);
 }
