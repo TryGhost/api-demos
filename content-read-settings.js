@@ -4,16 +4,21 @@
  *
  * Usage:
  *
- * node content-read-settings.js https://blah.ghost.io CONTENT_API_KEY
+ * GHOST_CONTENT_API_KEY=your_key node content-read-settings.js https://blah.ghost.io
  */
 
-if (process.argv.length < 4) {
+if (process.argv.length !== 3) {
     console.error('Missing an argument');
     process.exit(1);
 }
 
 const url = process.argv[2];
-const key = process.argv[3];
+const key = process.env.GHOST_CONTENT_API_KEY;
+
+if (!key) {
+    console.error('Missing GHOST_CONTENT_API_KEY environment variable');
+    process.exit(1);
+}
 
 const GhostContentAPI = require('@tryghost/content-api');
 
