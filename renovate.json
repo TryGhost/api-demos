@@ -1,7 +1,13 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "github>TryGhost/renovate-config"
+    "local>TryGhost/renovate-config"
   ],
-  "automerge": true
+  "packageRules": [
+    {
+      "description": "Keep Vitest below v5 while the demos support Node 20; Vitest 5 drops Node 20 support.",
+      "matchPackageNames": ["vitest"],
+      "allowedVersions": "<5"
+    }
+  ]
 }

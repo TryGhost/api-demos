@@ -45,8 +45,13 @@ not executable paths covered by the suite.
 The [test workflow](../.github/workflows/test.yml) runs CLI coverage across its
 Node matrix and browser tests on one runtime for every PR, including Renovate,
 and for pushes to main. The **Required checks pass** job succeeds only when all
-its prerequisite jobs succeed. GitHub ruleset enforcement is a separate setting:
-adding this job does not by itself prevent a merge without passing checks.
+its prerequisite jobs succeed. The default-branch ruleset requires this check
+and an up-to-date branch before merging, with the standard Ghost Foundation
+team bypass.
+
+[Renovate](../renovate.json) uses the shared TryGhost default preset, including
+its automerge policy. A local compatibility rule keeps Vitest below v5 while
+the CI matrix includes Node 20; revisit that rule when Node 20 support changes.
 
 When changing a demo, extend its acceptance tests at the observable boundary.
 Keep the HTML demos' pinned CDN URLs, installed SDK/helper versions and browser
