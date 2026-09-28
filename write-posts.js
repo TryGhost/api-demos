@@ -16,9 +16,9 @@ const GhostAdminAPI = require('@tryghost/admin-api');
 
 // Configure the client
 const api = new GhostAdminAPI({
-    url: 'http://localhost:2368',
+    url: process.env.GHOST_API_URL || 'http://localhost:2368',
     // @TODO: edit your key here
-    key: 'YOUR_ADMIN_API_KEY',
+    key: process.env.GHOST_ADMIN_API_KEY || 'YOUR_ADMIN_API_KEY',
     version: 'v3'
 });
 
@@ -43,7 +43,10 @@ api.posts.add({
     html: html
 }, {source: 'html'})
     .then(response => console.log(response))
-    .catch(error => console.error(error));
+    .catch((error) => {
+        console.error(error);
+        process.exitCode = 1;
+    });
 
 /**
  * Option 2 - HTML Card
@@ -63,7 +66,10 @@ api.posts.add({
 //     })
 // })
 //     .then(response => console.log(response))
-//     .catch(error => console.error(error));
+//     .catch((error) => {
+//         console.error(error);
+//         process.exitCode = 1;
+//     });
 
 /**
  * Option 3 - Extend the HTML -> Mobiledoc converter
@@ -83,4 +89,7 @@ api.posts.add({
 
 // api.posts.read({id: 'ID GOES HERE'}, {formats: 'mobiledoc,html,plaintext'})
 //     .then(response => console.log(response))
-//     .catch(error => console.error(error));
+//     .catch((error) => {
+//         console.error(error);
+//         process.exitCode = 1;
+//     });

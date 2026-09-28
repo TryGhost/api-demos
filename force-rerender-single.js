@@ -7,8 +7,8 @@
  * node force-rerender-single.js https://blah.ghost.io ADMIN_API_KEY slug true - live run
  */
 
-if (process.argv.length < 4) {
-    console.log('not enough arguments, provide an API url and admin key');
+if (process.argv.length < 5) {
+    console.log('not enough arguments, provide an API url, admin key and post slug');
     process.exit(1);
 }
 

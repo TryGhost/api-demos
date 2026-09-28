@@ -18,9 +18,9 @@ const GhostAdminAPI = require('@tryghost/admin-api');
 
 // Configure the client
 const api = new GhostAdminAPI({
-    url: 'http://localhost:2368',
+    url: process.env.GHOST_API_URL || 'http://localhost:2368',
     // @TODO: edit your key here
-    key: 'YOUR_ADMIN_API_KEY',
+    key: process.env.GHOST_ADMIN_API_KEY || 'YOUR_ADMIN_API_KEY',
     version: 'canary'
 });
 
@@ -64,7 +64,10 @@ api.posts.add({
     mobiledoc: JSON.stringify(twoSegmentMobiledoc)
 })
     .then(response => console.log(response))
-    .catch(error => console.error(error));
+    .catch((error) => {
+        console.error(error);
+        process.exitCode = 1;
+    });
 
 /**
  * Option 2 - one segment in the document
@@ -90,4 +93,7 @@ api.posts.add({
 //     mobiledoc: JSON.stringify(paidSegmentMobiledoc)
 // })
 //     .then(response => console.log(response))
-//     .catch(error => console.error(error));
+//     .catch((error) => {
+//         console.error(error);
+//         process.exitCode = 1;
+//     });

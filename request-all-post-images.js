@@ -17,7 +17,6 @@ if (process.argv.length < 4) {
 
 const Promise = require('bluebird');
 const GhostAdminAPI = require('@tryghost/admin-api');
-const fetch = require('node-fetch');
 
 const url = process.argv[2];
 const key = process.argv[3];
@@ -44,9 +43,9 @@ const key = process.argv[3];
         const mobiledoc = JSON.parse(mobiledocStr);
         const srcs = mobiledoc.cards.map(card => {
             const [type, attributes] = card;
-            return attributes.src;
+            return type === 'image' ? attributes.src : undefined;
         });
-        return srcs
+        return srcs;
     }
 
     try {
@@ -66,10 +65,7 @@ const key = process.argv[3];
         });
 
         // remove duplicates
-        const sanitizedImages = [...new Set(allImages)];
-
-        // remove 'undefined' from the array
-        sanitizedImages.splice(sanitizedImages.indexOf(undefined), 1);
+        const sanitizedImages = [...new Set(allImages)].filter(image => typeof image === 'string' && image.length > 0);
 
         const sizes = [600, 1000, 1600];
 
@@ -94,7 +90,11 @@ const key = process.argv[3];
             // do a fetch request for each image version and do nothing with the response
             await Promise.mapSeries(allImageVersions, async (image) => {
                 console.log(`Fetching ${image}`);
-                await fetch(image);
+                const response = await fetch(image);
+                if (!response.ok) {
+                    throw new Error(`Image request failed: ${response.status} ${image}`);
+                }
+                await response.arrayBuffer();
                 return Promise.delay(50).return(true);
             });
 

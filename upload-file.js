@@ -17,9 +17,9 @@ const path = require('path');
 
 // Configure the client
 const api = new GhostAdminAPI({
-    url: 'http://localhost:2368',
+    url: process.env.GHOST_API_URL || 'http://localhost:2368',
     // @TODO: edit your key here
-    key: 'YOUR_ADMIN_API_KEY_HERE',
+    key: process.env.GHOST_ADMIN_API_KEY || 'YOUR_ADMIN_API_KEY_HERE',
     version: 'canary'
 });
 
@@ -31,4 +31,7 @@ api.files.upload({
     ref
 })
     .then(response => console.log(response))
-    .catch(error => console.error(error));
+    .catch((error) => {
+        console.error(error);
+        process.exitCode = 1;
+    });

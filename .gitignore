@@ -69,3 +69,7 @@ typings/
 .DS_Store
 
 # Admin Api Experiments Custom
+
+# Browser test artifacts
+test-results/
+playwright-report/
