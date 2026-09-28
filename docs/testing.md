@@ -42,16 +42,16 @@ not executable paths covered by the suite.
 
 ## CI and maintenance
 
-The [test workflow](../.github/workflows/test.yml) runs CLI coverage across its
-Node matrix and browser tests on one runtime for every PR, including Renovate,
+The [test workflow](../.github/workflows/test.yml) runs CLI coverage and browser
+tests on Node 24, selected by [`.nvmrc`](../.nvmrc), for every PR, including Renovate,
 and for pushes to main. The **Required checks pass** job succeeds only when all
 its prerequisite jobs succeed. The default-branch ruleset requires this check
 and an up-to-date branch before merging, with the standard Ghost Foundation
 team bypass.
 
 [Renovate](../renovate.json) uses the shared TryGhost default preset, including
-its automerge policy. A local compatibility rule keeps Vitest below v5 while
-the CI matrix includes Node 20; revisit that rule when Node 20 support changes.
+its automerge policy. CI follows `.nvmrc` when Renovate proposes a Node update,
+so the proposed runtime must pass both suites before merging.
 
 When changing a demo, extend its acceptance tests at the observable boundary.
 Keep the HTML demos' pinned CDN URLs, installed SDK/helper versions and browser
@@ -60,6 +60,5 @@ so a shared rendering bug cannot make a visual comparison pass.
 
 `yarn lint` is currently separate from the passing CI checks: the installed
 ESLint and legacy `.eslintrc.js` configuration are incompatible. A lint migration
-is still needed. Check new test-tool releases against every runtime in the CI
-matrix before allowing automated upgrades; passing on one Node version is not
-sufficient.
+is still needed. Test-tool updates must pass both CLI coverage and browser
+checks on the runtime selected by `.nvmrc` before merging.

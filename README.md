@@ -28,7 +28,7 @@ yarn install --frozen-lockfile
 
 If you do not use nvm, install the latest patch of the major in `.nvmrc` with
 your preferred Node version manager. The [CI workflow](.github/workflows/test.yml)
-lists the other tested runtimes.
+runs both CLI and browser checks on that same Node version.
 
 ## Usage
 
