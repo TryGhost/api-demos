@@ -6,7 +6,7 @@
  * node members-bulk-delete.js https://blah.ghost.io ADMIN_API_KEY [true]
  *
  * If you run this script with just a URL and key, it will do a dry run
- * If you run this script with an extra argument (e.g. true) the deletions will be executed
+ * If you run this script with the extra argument true, the deletions will be executed
  */
 
 if (process.argv.length < 4) {

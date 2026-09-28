@@ -5,12 +5,11 @@
  *
  * To run me:
  *
- * 1. Replace "YOUR_ADMIN_API_KEY" below with your admin key (and edit the URL if you're not using localhost)
- * 2. Make sure the example you want to test is uncommented
- * 3. Run `node ./write-email-card-posts.js`
+ * 1. Set GHOST_API_URL and GHOST_ADMIN_API_KEY in your environment (or edit the inline examples)
+ * 2. Run the example command below; paths are relative to this script directory
  *
  * Example command:
- * node upload-video.js "sample_640x360.mp4" "ghost-logo.png"
+ * node upload-video.js "fixtures/sample_640x360.mp4" "fixtures/ghost-logo.png"
  */
 
 // The admin API client is the easiest way to use the API

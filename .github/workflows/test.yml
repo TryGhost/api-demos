@@ -46,3 +46,17 @@ jobs:
       - run: yarn install --frozen-lockfile
       - run: yarn playwright install --with-deps chromium
       - run: yarn test:browser
+
+  required-checks-pass:
+    name: Required checks pass
+    if: always()
+    needs: [build, browser]
+    runs-on: ubuntu-26.04
+    timeout-minutes: 5
+    steps:
+      - name: Verify all required jobs succeeded
+        env:
+          NEEDS: ${{ toJSON(needs) }}
+        run: |
+          echo "$NEEDS" | jq -r 'to_entries[] | "\(.key): \(.value.result)"'
+          echo "$NEEDS" | jq -e 'all(.[]; .result == "success")' > /dev/null

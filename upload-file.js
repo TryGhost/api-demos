@@ -5,7 +5,7 @@
  *
  * To run me:
  *
- * 1. Replace "YOUR_ADMIN_API_KEY" below with your admin key (and edit the URL if you're not using localhost)
+ * 1. Set GHOST_API_URL and GHOST_ADMIN_API_KEY in your environment (or edit the inline examples)
  * 2. Make sure the example you want to test is uncommented
  * 3. Run `node upload-file.js ./sample_document.pdf some-ID-123`
  *              ^ script name   ^ path to file     ^ reference
