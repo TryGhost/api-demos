@@ -94,7 +94,16 @@ const key = process.argv[3];
                 if (!response.ok) {
                     throw new Error(`Image request failed: ${response.status} ${image}`);
                 }
-                await response.arrayBuffer();
+                if (response.body) {
+                    const reader = response.body.getReader();
+                    try {
+                        while (!(await reader.read()).done) {
+                            // Drain each chunk without retaining the complete image.
+                        }
+                    } finally {
+                        reader.releaseLock();
+                    }
+                }
                 return Promise.delay(50).return(true);
             });
 

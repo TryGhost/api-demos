@@ -1,4 +1,5 @@
 import {afterEach, describe, expect, test} from 'vitest';
+import {createServer} from 'node:http';
 import {generateKeyPairSync} from 'node:crypto';
 import {readdirSync} from 'node:fs';
 import {adminKey, apiFailure, fixtureApi, root, runDemo} from './helpers/api.mjs';
@@ -282,4 +283,51 @@ describe('JWKS lookup uses the real signing-key client', () => {
         expect(result.code).toBe(1);
         expect(result.stderr).toContain('Fixture JWKS unavailable');
     });
+});
+
+
+test.each(['complete', 'interrupted', 'empty'])('image response stream: %s', async (mode) => {
+    let imageRequests = 0;
+    let completed = 0;
+    const imageServer = createServer((req, res) => {
+        imageRequests += 1;
+        if (mode === 'empty') {
+            res.writeHead(204);
+            res.end();
+            return;
+        }
+        res.writeHead(200, {'content-type': 'image/png'});
+        res.write(Buffer.alloc(64 * 1024));
+        const timer = setTimeout(() => {
+            if (mode === 'interrupted') {
+                res.destroy();
+            } else {
+                res.end(Buffer.alloc(64 * 1024));
+                completed += 1;
+            }
+        }, 50);
+        res.on('close', () => clearTimeout(timer));
+    });
+    await new Promise(resolve => imageServer.listen(0, '127.0.0.1', resolve));
+    try {
+        const imageUrl = `http://127.0.0.1:${imageServer.address().port}/content/images/stream.png`;
+        const api = await serve(() => ({posts: [{...post, mobiledoc: JSON.stringify({cards: [['image', {src: imageUrl}]]})}]}));
+        const result = await runDemo('request-all-post-images.js', [api.url, adminKey, 'true']);
+        if (mode === 'interrupted') {
+            expect(result.code).toBe(1);
+            expect(result.stderr).toContain('There was an error');
+            expect(result.stdout).not.toContain('Requested 3 images');
+            expect(imageRequests).toBe(1);
+        } else {
+            expect(result.code, result.stderr).toBe(0);
+            expect(result.stdout).toContain('Requested 3 images');
+            expect(imageRequests).toBe(3);
+            expect(completed).toBe(mode === 'complete' ? 3 : 0);
+        }
+    } finally {
+        await new Promise(resolve => {
+            imageServer.close(resolve);
+            imageServer.closeAllConnections();
+        });
+    }
 });
