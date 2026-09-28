@@ -40,7 +40,6 @@ const api = new GhostAdminAPI({
     }
 
     console.log('API URL', url);
-    console.log('API KEY', key);
     // Give the user time to read...
     await Promise.delay(1000);
 

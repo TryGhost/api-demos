@@ -1,7 +1,7 @@
 <html>
 
 <head>
-<script src="https://unpkg.com/@tryghost/content-api@latest/umd/content-api.min.js"></script>
+<script src="https://unpkg.com/@tryghost/content-api@1.12.12/umd/content-api.min.js"></script>
 <script src="https://unpkg.com/@tryghost/helpers@1.1.27/umd/helpers.min.js"></script>
 <script>
     const api = new GhostContentAPI({
@@ -52,7 +52,10 @@
                 let customTime = readingTime(post);
 
                 // Step 5: Insert the string into the page
-                document.querySelector('#multi-result').innerHTML += `${post.title} - ${customTime} <br>`;
+                document.querySelector('#multi-result').append(
+                    document.createTextNode(`${post.title} - ${customTime} `),
+                    document.createElement('br')
+                );
             });
 
         })

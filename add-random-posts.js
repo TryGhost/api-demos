@@ -5,7 +5,7 @@
  *
  * node add-random-posts.js https://blah.ghost.io ADMIN_API_KEY number_of_posts
  */
-if (process.argv.length < 5) {
+if (process.argv.length < 4) {
     console.error('Missing an argument');
     process.exit(1);
 }
