@@ -1,0 +1,60 @@
+# Testing the demos
+
+Run the validation commands in the [README](../README.md). Tests use synthetic
+credentials and local fixtures; no Ghost site or real API key is needed.
+
+## CLI and browser coverage
+
+The CLI tests launch the actual scripts as Node subprocesses and exercise the
+installed SDKs against a loopback HTTP fixture server. They use synthetic
+credentials, never a real Ghost site. c8 collects native V8 coverage from those
+subprocesses; Vitest's in-process coverage provider would not measure the
+scripts launched this way. Every root JavaScript demo is included, including
+unexecuted files. Coverage fails the command if line, function or branch
+coverage drops below the thresholds in [`.c8rc.json`](../.c8rc.json): 98% lines,
+98% functions and 91% branches. That configuration is the source of truth.
+
+The browser tests execute both HTML demos with the installed Content API and
+helpers bundles. They intercept all network requests and compare screenshots
+with independent, handwritten reference pages rendered in the same browser.
+This checks the visible output without platform-specific screenshot baselines.
+The HTML CDN URLs are pinned to the tested package versions; update them and
+the browser version assertions together when upgrading those packages. The
+suite does not test unpkg availability or a live Ghost server.
+
+### Tested boundaries
+
+| Demos | Acceptance coverage |
+| --- | --- |
+| Read posts, content settings, legacy subscribers | Request options, response handling and errors; subscribers remain a v2 API example |
+| Add random posts, add tags, find/replace | Generated payloads, preserved fields and failure status |
+| Rerender all/single posts, bulk member deletion | Default dry runs, explicit confirmation, selected resources and collision timestamps |
+| Request post images | Image-card filtering, deduplication, all three sizes, dry run and HTTP failures |
+| Write HTML/email-card posts, upload files/video | Real SDK JSON/multipart requests and rejected writes |
+| JWKS lookup | Real client import, matching public key, missing keys and endpoint errors |
+| Read-post and reading-time HTML | Real browser SDK/helper, query options, output, error paths, literal titles and visual comparisons |
+
+These are standalone examples, not an API server or an npm library. There are
+no inbound API endpoints or published build artifacts to validate. Fixture
+responses test the client-side contracts; they do not prove compatibility with
+every historical Ghost server version. Commented-out alternative examples are
+not executable paths covered by the suite.
+
+## CI and maintenance
+
+The [test workflow](../.github/workflows/test.yml) runs CLI coverage across its
+Node matrix and browser tests on one runtime for every PR, including Renovate,
+and for pushes to main. The **Required checks pass** job succeeds only when all
+its prerequisite jobs succeed. GitHub ruleset enforcement is a separate setting:
+adding this job does not by itself prevent a merge without passing checks.
+
+When changing a demo, extend its acceptance tests at the observable boundary.
+Keep the HTML demos' pinned CDN URLs, installed SDK/helper versions and browser
+version assertions in sync. Keep reference pages independent of the demo code
+so a shared rendering bug cannot make a visual comparison pass.
+
+`yarn lint` is currently separate from the passing CI checks: the installed
+ESLint and legacy `.eslintrc.js` configuration are incompatible. A lint migration
+is still needed. Check new test-tool releases against every runtime in the CI
+matrix before allowing automated upgrades; passing on one Node version is not
+sufficient.
