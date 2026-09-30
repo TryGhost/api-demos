@@ -9,8 +9,6 @@
     "dev": "echo \"Implement me!\"",
     "test": "vitest run",
     "lint": "eslint . --ext .js --cache",
-    "preship": "yarn test",
-    "ship": "STATUS=$(git status --porcelain); echo $STATUS; if [ -z \"$STATUS\" ]; then yarn version && git push --follow-tags; fi",
     "test:coverage": "c8 vitest run",
     "test:browser": "playwright test"
   },
@@ -30,5 +28,6 @@
     "jwks-client": "2.1.0",
     "lodash": "4.18.1",
     "lorem-ipsum": "3.0.0"
-  }
+  },
+  "packageManager": "pnpm@12.8.1"
 }

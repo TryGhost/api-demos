@@ -16,14 +16,15 @@ and tooling. Learn more about the Core API [in our docs](https://ghost.org/docs/
 
 ## Install
 
-Use the Node version selected by [`.nvmrc`](.nvmrc) and Yarn Classic.
+Use the Node version selected by [`.nvmrc`](.nvmrc) and the pnpm version pinned in `package.json`.
 
 ```sh
 git clone https://github.com/TryGhost/api-demos.git
 cd api-demos
 nvm install
 nvm use
-yarn install --frozen-lockfile
+corepack enable
+pnpm install --frozen-lockfile
 ```
 
 If you do not use nvm, install the latest patch of the major in `.nvmrc` with
@@ -69,13 +70,13 @@ not establish compatibility with every Ghost server version.
 ## Development and validation
 
 ```sh
-yarn test                       # CLI acceptance tests
-yarn test:coverage              # CLI tests plus enforced V8 coverage
-yarn playwright install chromium
-yarn test:browser               # Browser behaviour and visual regression tests
+pnpm test                       # CLI acceptance tests
+pnpm test:coverage              # CLI tests plus enforced V8 coverage
+pnpm playwright install chromium
+pnpm test:browser               # Browser behaviour and visual regression tests
 ```
 
-On Linux, use `yarn playwright install --with-deps chromium` to install browser
+On Linux, use `pnpm playwright install --with-deps chromium` to install browser
 system dependencies too. Tests use local fixtures and synthetic credentials.
 See [Testing the demos](docs/testing.md) for the tested boundaries, coverage
 thresholds, browser reference pages, CI gate and remaining lint limitation.
