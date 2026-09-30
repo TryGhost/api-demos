@@ -43,7 +43,7 @@ not executable paths covered by the suite.
 ## CI and maintenance
 
 The [test workflow](../.github/workflows/test.yml) runs CLI coverage and browser
-tests on Node 24, selected by [`.nvmrc`](../.nvmrc), for every PR, including Renovate,
+tests on Node 22, selected by [`.nvmrc`](../.nvmrc), for every PR, including Renovate,
 and for pushes to main. The **Required checks pass** job succeeds only when all
 its prerequisite jobs succeed. The default-branch ruleset requires this check
 and an up-to-date branch before merging, with the standard Ghost Foundation
