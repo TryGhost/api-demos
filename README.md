@@ -24,7 +24,7 @@ cd api-demos
 nvm install
 nvm use
 corepack enable
-pnpm install --frozen-lockfile
+pnpm install
 ```
 
 If you do not use nvm, install the latest patch of the major in `.nvmrc` with
