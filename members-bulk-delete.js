@@ -70,7 +70,7 @@ const api = new GhostAdminAPI({
         console.log(keep);
 
         if (doDelete) {
-            const result = await Promise.mapSeries(freeMembers, async (member) => {
+            const results = await Promise.mapSeries(freeMembers, async (member) => {
                 console.log('Deleting', member.email);
 
                 // Call the API
@@ -79,7 +79,7 @@ const api = new GhostAdminAPI({
                 return Promise.delay(50).return(result);
             });
 
-            console.log('Deleted', result.length, 'members');
+            console.log('Deleted', results.length, 'members');
         }
     } catch (err) {
         console.error('There was an error', require('util').inspect(err, false, null));

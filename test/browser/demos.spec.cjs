@@ -95,6 +95,8 @@ async function expectReference(page, context, filename, testInfo) {
     // OS font differences do not require regenerating application snapshots.
     const difference = await reference.evaluate(
         async ({ actualPng, expectedPng }) => {
+            // This helper must stay inside the callback serialized into the browser.
+            // oxlint-disable-next-line unicorn/consistent-function-scoping
             async function pixels(base64) {
                 const image = new Image();
                 image.src = `data:image/png;base64,${base64}`;
@@ -102,28 +104,32 @@ async function expectReference(page, context, filename, testInfo) {
                 const canvas = document.createElement('canvas');
                 canvas.width = image.width;
                 canvas.height = image.height;
-                const context = canvas.getContext('2d');
-                context.drawImage(image, 0, 0);
+                const canvasContext = canvas.getContext('2d');
+                canvasContext.drawImage(image, 0, 0);
                 return {
                     width: image.width,
                     height: image.height,
-                    data: context.getImageData(0, 0, image.width, image.height).data,
+                    data: canvasContext.getImageData(0, 0, image.width, image.height).data,
                 };
             }
-            const actual = await pixels(actualPng);
-            const expected = await pixels(expectedPng);
-            if (actual.width !== expected.width || actual.height !== expected.height) {
+            const actualPixels = await pixels(actualPng);
+            const expectedPixels = await pixels(expectedPng);
+            if (
+                actualPixels.width !== expectedPixels.width ||
+                actualPixels.height !== expectedPixels.height
+            ) {
                 return 'Screenshot dimensions differ';
             }
             let differingPixels = 0;
-            for (let index = 0; index < actual.data.length; index += 4) {
+            for (let index = 0; index < actualPixels.data.length; index += 4) {
                 // Chromium can rasterize a near-white glyph edge as 253 or 255.
                 // Every larger pixel difference fails; there is no pixel-count allowance.
                 if (
                     [0, 1, 2, 3].some(
                         (channel) =>
                             Math.abs(
-                                actual.data[index + channel] - expected.data[index + channel],
+                                actualPixels.data[index + channel] -
+                                    expectedPixels.data[index + channel],
                             ) > 2,
                     )
                 ) {
@@ -201,7 +207,7 @@ for (const filename of ['read-post.html', 'custom-reading-time.html']) {
 
 test('post titles are displayed literally without interpreting markup', async ({ page }) => {
     const title = '<img src=x onerror="window.titleExecuted = true">';
-    const posts = readingPosts.map((post) => ({ ...post, title }));
+    const posts = readingPosts.map((readingPost) => ({ ...readingPost, title }));
     const state = await openDemo(page, 'custom-reading-time.html', { posts });
     await expect(page.locator('#multi-result')).toContainText(title);
     await expect(page.locator('#multi-result img')).toHaveCount(0);

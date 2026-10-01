@@ -70,7 +70,7 @@ const api = new GhostAdminAPI({
         console.log(`Adding ${posts.length} posts to ${url}`);
 
         // convert our list of posts, to a list of promises for requests to the api
-        const result = await Promise.mapSeries(posts, async (post) => {
+        const results = await Promise.mapSeries(posts, async (post) => {
             console.log('Adding', post.title);
             // Call the API
             let result = await api.posts.add(post, { source: 'html' });
@@ -79,7 +79,7 @@ const api = new GhostAdminAPI({
             return Promise.delay(5).return(result);
         });
 
-        console.log(`Added ${result.length} posts`);
+        console.log(`Added ${results.length} posts`);
     } catch (err) {
         console.error('There was an error', require('util').inspect(err, false, null));
         process.exit(1);

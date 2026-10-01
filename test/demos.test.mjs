@@ -56,8 +56,8 @@ test('the acceptance inventory covers every standalone Node demo', () => {
     expect(
         readdirSync(root)
             .filter((file) => file.endsWith('.js') && !file.startsWith('.'))
-            .sort(),
-    ).toEqual([...cliDemos, ...configuredDemos, 'verify-through-jwks.js'].sort());
+            .toSorted(),
+    ).toEqual([...cliDemos, ...configuredDemos, 'verify-through-jwks.js'].toSorted());
 });
 
 test.each(cliDemos)('%s rejects missing required arguments', async (file) => {
@@ -337,7 +337,7 @@ test.each([false, true])(
         expect(result.code, result.stderr).toBe(0);
         expect(result.stdout).toContain('Found 2 images that amount to 6 versions');
         const images = api.requests.filter((req) => req.url.pathname.includes('/content/images/'));
-        expect(images.map((req) => req.url.pathname).sort()).toEqual(
+        expect(images.map((req) => req.url.pathname).toSorted()).toEqual(
             live
                 ? ['one', 'two']
                       .flatMap((name) =>
@@ -345,7 +345,7 @@ test.each([false, true])(
                               (size) => `/content/images/size/w${size}/${name}.png`,
                           ),
                       )
-                      .sort()
+                      .toSorted()
                 : [],
         );
     },

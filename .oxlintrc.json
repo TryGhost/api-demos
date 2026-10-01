@@ -2,7 +2,7 @@
   "$schema": "./node_modules/oxlint/configuration_schema.json",
   "categories": {
     "correctness": "error",
-    "suspicious": "warn"
+    "suspicious": "error"
   },
   "env": {
     "node": true,

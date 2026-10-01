@@ -38,7 +38,7 @@ const api = new GhostAdminAPI({
         const allPosts = await api.posts.browse({ limit: 'all' });
 
         // convert our list of posts, to a list of promises for requests to the api
-        const result = await Promise.mapSeries(allPosts, async (post) => {
+        const results = await Promise.mapSeries(allPosts, async (post) => {
             // Add the tag to the post
             post.tags.push(tagToAdd);
 
@@ -54,7 +54,7 @@ const api = new GhostAdminAPI({
             return Promise.delay(50).return(result);
         });
 
-        console.log(`Updated ${result.length} posts`);
+        console.log(`Updated ${results.length} posts`);
     } catch (err) {
         console.error('There was an error', require('util').inspect(err, false, null));
         process.exit(1);

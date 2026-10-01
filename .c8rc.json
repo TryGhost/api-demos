@@ -1,16 +1,8 @@
 {
   "all": true,
-  "include": [
-    "*.js"
-  ],
-  "exclude": [
-    ".*.js"
-  ],
-  "reporter": [
-    "text",
-    "json-summary",
-    "lcov"
-  ],
+  "include": ["*.js"],
+  "exclude": [".*.js"],
+  "reporter": ["text", "json-summary", "lcov"],
   "check-coverage": true,
   "lines": 98,
   "functions": 98,

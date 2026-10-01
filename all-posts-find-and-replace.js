@@ -31,7 +31,7 @@ const api = new GhostAdminAPI({
         const allPosts = await api.posts.browse({ limit: 'all' });
 
         // convert our list of posts, to a list of promises for requests to the api
-        const result = await Promise.mapSeries(allPosts, async (post) => {
+        const results = await Promise.mapSeries(allPosts, async (post) => {
             // Edit mobiledoc
             // @NOTE: if you're editing a string that might appear in mobiledoc structure, edit the HTML instead!
             // E.g. "sections" or "markups"
@@ -54,7 +54,7 @@ const api = new GhostAdminAPI({
             return Promise.delay(50).return(result);
         });
 
-        console.log(`Updated ${result.length} posts`);
+        console.log(`Updated ${results.length} posts`);
     } catch (err) {
         console.error('There was an error', require('util').inspect(err, false, null));
         process.exit(1);

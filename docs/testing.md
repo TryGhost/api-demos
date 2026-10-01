@@ -24,15 +24,15 @@ suite does not test unpkg availability or a live Ghost server.
 
 ### Tested boundaries
 
-| Demos | Acceptance coverage |
-| --- | --- |
-| Read posts, content settings, legacy subscribers | Request options, response handling and errors; subscribers remain a v2 API example |
-| Add random posts, add tags, find/replace | Generated payloads, preserved fields and failure status |
-| Rerender all/single posts, bulk member deletion | Default dry runs, explicit confirmation, selected resources and collision timestamps |
-| Request post images | Image-card filtering, deduplication, all three sizes, dry run and HTTP failures |
-| Write HTML/email-card posts, upload files/video | Real SDK JSON/multipart requests and rejected writes |
-| JWKS lookup | Real client import, matching public key, missing keys and endpoint errors |
-| Read-post and reading-time HTML | Real browser SDK/helper, query options, output, error paths, literal titles and visual comparisons |
+| Demos                                            | Acceptance coverage                                                                                |
+| ------------------------------------------------ | -------------------------------------------------------------------------------------------------- |
+| Read posts, content settings, legacy subscribers | Request options, response handling and errors; subscribers remain a v2 API example                 |
+| Add random posts, add tags, find/replace         | Generated payloads, preserved fields and failure status                                            |
+| Rerender all/single posts, bulk member deletion  | Default dry runs, explicit confirmation, selected resources and collision timestamps               |
+| Request post images                              | Image-card filtering, deduplication, all three sizes, dry run and HTTP failures                    |
+| Write HTML/email-card posts, upload files/video  | Real SDK JSON/multipart requests and rejected writes                                               |
+| JWKS lookup                                      | Real client import, matching public key, missing keys and endpoint errors                          |
+| Read-post and reading-time HTML                  | Real browser SDK/helper, query options, output, error paths, literal titles and visual comparisons |
 
 These are standalone examples, not an API server or an npm library. There are
 no inbound API endpoints or published build artifacts to validate. Fixture
@@ -58,8 +58,11 @@ Keep the HTML demos' pinned CDN URLs, installed SDK/helper versions and browser
 version assertions in sync. Keep reference pages independent of the demo code
 so a shared rendering bug cannot make a visual comparison pass.
 
-`pnpm lint` runs oxlint correctness checks and oxfmt formatting checks for
-JavaScript files, and is required by CI alongside both test suites. Use
+`pnpm lint` runs oxlint correctness and suspicious checks for JavaScript, plus
+repository formatting with the same oxfmt configuration as Ghost. It is required
+by CI alongside both test suites. Every enabled lint rule is an error; rules
+that do not apply are off. `--deny-warnings` also rejects any accidentally
+introduced warning instead of hiding it. Use
 `pnpm lint:fix` for automatic lint fixes and formatting, or `pnpm format` for
 formatting alone. CLI demos allow console output as their user interface;
 configuration and test code retain the no-console rule. HTML demos and their
