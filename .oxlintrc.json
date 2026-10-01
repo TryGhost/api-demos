@@ -1,0 +1,38 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "categories": {
+    "correctness": "error",
+    "suspicious": "warn"
+  },
+  "env": {
+    "node": true,
+    "es2024": true
+  },
+  "rules": {
+    "no-console": "error"
+  },
+  "overrides": [
+    {
+      "files": [
+        "add-random-posts.js",
+        "add-tag-to-all-posts.js",
+        "all-posts-find-and-replace.js",
+        "content-read-settings.js",
+        "force-rerender-single.js",
+        "force-rerender.js",
+        "members-bulk-delete.js",
+        "read-legacy-admin-api-endpoint.js",
+        "read-posts.js",
+        "request-all-post-images.js",
+        "upload-file.js",
+        "upload-video.js",
+        "verify-through-jwks.js",
+        "write-email-card-posts.js",
+        "write-posts.js"
+      ],
+      "rules": {
+        "no-console": "off"
+      }
+    }
+  ]
+}

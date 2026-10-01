@@ -21,14 +21,14 @@ const GhostAdminAPI = require('@tryghost/admin-api');
 const api = new GhostAdminAPI({
     url,
     key,
-    version: 'v2'
+    version: 'v2',
 });
 
 (async function main() {
     try {
         // Admin API automatically includes tags and authors
         // WARNING: If the site is really big (1000s of posts) maybe do this paginated
-        const allPosts = await api.posts.browse({limit: 'all'});
+        const allPosts = await api.posts.browse({ limit: 'all' });
 
         // convert our list of posts, to a list of promises for requests to the api
         const result = await Promise.mapSeries(allPosts, async (post) => {
@@ -36,7 +36,7 @@ const api = new GhostAdminAPI({
             // @NOTE: if you're editing a string that might appear in mobiledoc structure, edit the HTML instead!
             // E.g. "sections" or "markups"
             // See Edit the HTML below
-            post.mobiledoc = post.mobiledoc.replace(/github/gmi, 'GitHub');
+            post.mobiledoc = post.mobiledoc.replace(/github/gim, 'GitHub');
 
             console.log('Updating', post.slug);
             // Call the API
@@ -59,4 +59,4 @@ const api = new GhostAdminAPI({
         console.error('There was an error', require('util').inspect(err, false, null));
         process.exit(1);
     }
-}());
+})();

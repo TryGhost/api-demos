@@ -3,7 +3,7 @@
  *
  * Why?
  * - This is useful to force ghost to create all image versions for all images especially when the content is being consumed by a static(SSG) frontend and the frontend requires responsive images to exist.
- * 
+ *
  * Usage:
  *
  * node request-all-post-images.js http://localhost:2368 ADMIN_API_KEY - dry run
@@ -36,12 +36,12 @@ const key = process.argv[3];
     const api = new GhostAdminAPI({
         url,
         key,
-        version: 'canary'
+        version: 'canary',
     });
 
     function getImagePaths(mobiledocStr) {
         const mobiledoc = JSON.parse(mobiledocStr);
-        const srcs = mobiledoc.cards.map(card => {
+        const srcs = mobiledoc.cards.map((card) => {
             const [type, attributes] = card;
             return type === 'image' ? attributes.src : undefined;
         });
@@ -65,26 +65,33 @@ const key = process.argv[3];
         });
 
         // remove duplicates
-        const sanitizedImages = [...new Set(allImages)].filter(image => typeof image === 'string' && image.length > 0);
+        const sanitizedImages = [...new Set(allImages)].filter(
+            (image) => typeof image === 'string' && image.length > 0,
+        );
 
         const sizes = [600, 1000, 1600];
 
-        // image versions  sample         
+        // image versions  sample
         // Original http://localhost:2368/content/images/2023/05/image.png
-        // 600w  = http://localhost:2368/content/images/size/w600/2023/05/image.png 
+        // 600w  = http://localhost:2368/content/images/size/w600/2023/05/image.png
         // 1000w = http://localhost:2368/content/images/size/w1000/2023/05/image.png
         // 1600w = http://localhost:2368/content/images/size/w1600/2023/05/image.png
 
         // generate 600, 1000, 1600 versions of each original image
         const allImageVersions = [];
-        sanitizedImages.forEach(image => {
-            sizes.forEach(size => {
-                const imageVersion = image.replace('/content/images/', `/content/images/size/w${size}/`);
+        sanitizedImages.forEach((image) => {
+            sizes.forEach((size) => {
+                const imageVersion = image.replace(
+                    '/content/images/',
+                    `/content/images/size/w${size}/`,
+                );
                 allImageVersions.push(imageVersion);
-            })
+            });
         });
 
-        console.log(`\nFound ${sanitizedImages.length} images that amount to ${allImageVersions.length} versions\n`);
+        console.log(
+            `\nFound ${sanitizedImages.length} images that amount to ${allImageVersions.length} versions\n`,
+        );
 
         if (doRerender) {
             // do a fetch request for each image version and do nothing with the response
@@ -106,7 +113,6 @@ const key = process.argv[3];
                 }
                 return Promise.delay(50).return(true);
             });
-
 
             console.log(`\nRequested ${allImageVersions.length} images\n`);
         }

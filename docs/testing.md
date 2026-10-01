@@ -42,7 +42,7 @@ not executable paths covered by the suite.
 
 ## CI and maintenance
 
-The [test workflow](../.github/workflows/test.yml) runs CLI coverage and browser
+The [test workflow](../.github/workflows/test.yml) runs lint, CLI coverage and browser
 tests on Node 22, selected by [`.nvmrc`](../.nvmrc), for every PR, including Renovate,
 and for pushes to main. The **Required checks pass** job succeeds only when all
 its prerequisite jobs succeed. The default-branch ruleset requires this check
@@ -58,7 +58,11 @@ Keep the HTML demos' pinned CDN URLs, installed SDK/helper versions and browser
 version assertions in sync. Keep reference pages independent of the demo code
 so a shared rendering bug cannot make a visual comparison pass.
 
-`pnpm lint` is currently separate from the passing CI checks: the installed
-ESLint and legacy `.eslintrc.js` configuration are incompatible. A lint migration
-is still needed. Test-tool updates must pass both CLI coverage and browser
-checks on the runtime selected by `.nvmrc` before merging.
+`pnpm lint` runs oxlint correctness checks and oxfmt formatting checks for
+JavaScript files, and is required by CI alongside both test suites. Use
+`pnpm lint:fix` for automatic lint fixes and formatting, or `pnpm format` for
+formatting alone. CLI demos allow console output as their user interface;
+configuration and test code retain the no-console rule. HTML demos and their
+independent reference pages are excluded from formatting and remain covered by
+the browser tests. Test-tool updates must pass all required checks on the
+runtime selected by `.nvmrc` before merging.

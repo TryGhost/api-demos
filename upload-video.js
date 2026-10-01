@@ -21,17 +21,18 @@ const api = new GhostAdminAPI({
     url: process.env.GHOST_API_URL || 'http://localhost:2368',
     // @TODO: edit your key here
     key: process.env.GHOST_ADMIN_API_KEY || 'YOUR_ADMIN_API_KEY',
-    version: 'canary'
+    version: 'canary',
 });
 
 const file = process.argv[2];
 const thumbnail = process.argv[3];
 
-api.media.upload({
-    file: path.join(__dirname, file),
-    thumbnail: path.join(__dirname, thumbnail)
-})
-    .then(response => console.log(response))
+api.media
+    .upload({
+        file: path.join(__dirname, file),
+        thumbnail: path.join(__dirname, thumbnail),
+    })
+    .then((response) => console.log(response))
     .catch((error) => {
         console.error(error);
         process.exitCode = 1;

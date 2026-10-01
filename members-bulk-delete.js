@@ -29,7 +29,7 @@ const GhostAdminAPI = require('@tryghost/admin-api');
 const api = new GhostAdminAPI({
     url,
     key,
-    version: 'canary'
+    version: 'canary',
 });
 
 (async function main() {
@@ -44,7 +44,7 @@ const api = new GhostAdminAPI({
     await Promise.delay(1000);
 
     try {
-        const allMembers = await api.members.browse({limit: 'all'});
+        const allMembers = await api.members.browse({ limit: 'all' });
         const keep = [];
         const freeMembers = allMembers.filter((member) => {
             // Comped members should have a subscription, but just in case
@@ -57,7 +57,14 @@ const api = new GhostAdminAPI({
             return false;
         });
 
-        console.log(freeMembers.length, 'Members will be deleted out of', allMembers.length, 'total members. This will leave', keep.length, 'members');
+        console.log(
+            freeMembers.length,
+            'Members will be deleted out of',
+            allMembers.length,
+            'total members. This will leave',
+            keep.length,
+            'members',
+        );
 
         console.log('Keeping:');
         console.log(keep);
@@ -67,7 +74,7 @@ const api = new GhostAdminAPI({
                 console.log('Deleting', member.email);
 
                 // Call the API
-                const result = await api.members.delete({id: member.id});
+                const result = await api.members.delete({ id: member.id });
                 // Add a delay but return the original result
                 return Promise.delay(50).return(result);
             });
@@ -81,4 +88,4 @@ const api = new GhostAdminAPI({
         }
         process.exit(1);
     }
-}());
+})();

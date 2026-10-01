@@ -1,4 +1,4 @@
-/** 
+/**
  * Warning: This script uses an experimental alpha feature
  *
  * Write Posts with customized mobiledocs
@@ -21,7 +21,7 @@ const api = new GhostAdminAPI({
     url: process.env.GHOST_API_URL || 'http://localhost:2368',
     // @TODO: edit your key here
     key: process.env.GHOST_ADMIN_API_KEY || 'YOUR_ADMIN_API_KEY',
-    version: 'canary'
+    version: 'canary',
 });
 
 /**
@@ -37,20 +37,30 @@ const api = new GhostAdminAPI({
 const twoSegmentMobiledoc = {
     version: '0.3.1',
     atoms: [],
-    cards: [[
-        'email', {
-            html: '<p>Hey {first_name, "there"} paid member</p>',
-            segment: 'status:-free'
-        }
-    ],[
-        'email', {
-            html: '<p>Hi {first_name, "there"} free member</p>',
-            segment: 'status:free'
-        }
-    ]],
+    cards: [
+        [
+            'email',
+            {
+                html: '<p>Hey {first_name, "there"} paid member</p>',
+                segment: 'status:-free',
+            },
+        ],
+        [
+            'email',
+            {
+                html: '<p>Hi {first_name, "there"} free member</p>',
+                segment: 'status:free',
+            },
+        ],
+    ],
     markups: [],
-    sections: [[1,'p',[[0,[],0,'paragraph text']]],[10,0],[10,1],[1,'p',[]]],
-    ghostVersion: '4.0'
+    sections: [
+        [1, 'p', [[0, [], 0, 'paragraph text']]],
+        [10, 0],
+        [10, 1],
+        [1, 'p', []],
+    ],
+    ghostVersion: '4.0',
 };
 
 /**
@@ -59,11 +69,12 @@ const twoSegmentMobiledoc = {
  * Create a post with two member segments `free` and `-free`
  */
 
-api.posts.add({
-    title: 'Two segments one 𝖼̶𝗎̶𝗉̶ post',
-    mobiledoc: JSON.stringify(twoSegmentMobiledoc)
-})
-    .then(response => console.log(response))
+api.posts
+    .add({
+        title: 'Two segments one 𝖼̶𝗎̶𝗉̶ post',
+        mobiledoc: JSON.stringify(twoSegmentMobiledoc),
+    })
+    .then((response) => console.log(response))
     .catch((error) => {
         console.error(error);
         process.exitCode = 1;
