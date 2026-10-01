@@ -58,7 +58,7 @@ Keep the HTML demos' pinned CDN URLs, installed SDK/helper versions and browser
 version assertions in sync. Keep reference pages independent of the demo code
 so a shared rendering bug cannot make a visual comparison pass.
 
-`yarn lint` is currently separate from the passing CI checks: the installed
+`pnpm lint` is currently separate from the passing CI checks: the installed
 ESLint and legacy `.eslintrc.js` configuration are incompatible. A lint migration
 is still needed. Test-tool updates must pass both CLI coverage and browser
 checks on the runtime selected by `.nvmrc` before merging.
