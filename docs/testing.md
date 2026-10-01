@@ -18,6 +18,12 @@ The browser tests execute both HTML demos with the installed Content API and
 helpers bundles. They intercept all network requests and compare screenshots
 with independent, handwritten reference pages rendered in the same browser.
 This checks the visible output without platform-specific screenshot baselines.
+On browser failures, CI retains `test-results/` for seven days, including traces,
+actual/reference screenshots, repeated captures and sampled differing pixel
+values. Download the `browser-failure-diagnostics` artifact from the failed run
+to investigate rendering differences. Repeated captures are diagnostic only;
+they do not retry or override the original comparison.
+
 The HTML CDN URLs are pinned to the tested package versions; update them and
 the browser version assertions together when upgrading those packages. The
 suite does not test unpkg availability or a live Ghost server.

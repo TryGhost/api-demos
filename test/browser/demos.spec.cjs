@@ -82,6 +82,13 @@ async function openDemo(page, filename, { fail = false, posts = readingPosts } =
     return { requests, unexpected, errors };
 }
 
+async function attachDiagnostic(testInfo, name, { body, contentType }) {
+    const extension = contentType === 'image/png' ? 'png' : 'json';
+    const outputPath = testInfo.outputPath(`${name}.${extension}`);
+    await fs.writeFile(outputPath, body);
+    await testInfo.attach(name, { path: outputPath, contentType });
+}
+
 async function expectReference(page, context, filename, testInfo) {
     const reference = await context.newPage();
     await reference.setContent(
@@ -89,8 +96,8 @@ async function expectReference(page, context, filename, testInfo) {
     );
     const actual = await page.screenshot({ animations: 'disabled' });
     const expected = await reference.screenshot({ animations: 'disabled' });
-    await testInfo.attach('actual', { body: actual, contentType: 'image/png' });
-    await testInfo.attach('reference', { body: expected, contentType: 'image/png' });
+    await attachDiagnostic(testInfo, 'actual', { body: actual, contentType: 'image/png' });
+    await attachDiagnostic(testInfo, 'reference', { body: expected, contentType: 'image/png' });
     // Independent, handwritten HTML reference: rendered on the same platform so
     // OS font differences do not require regenerating application snapshots.
     const difference = await reference.evaluate(
@@ -121,6 +128,7 @@ async function expectReference(page, context, filename, testInfo) {
                 return 'Screenshot dimensions differ';
             }
             let differingPixels = 0;
+            const samples = [];
             for (let index = 0; index < actualPixels.data.length; index += 4) {
                 // Chromium can rasterize a near-white glyph edge as 253 or 255.
                 // Every larger pixel difference fails; there is no pixel-count allowance.
@@ -134,13 +142,38 @@ async function expectReference(page, context, filename, testInfo) {
                     )
                 ) {
                     differingPixels += 1;
+                    if (samples.length < 20) {
+                        samples.push({
+                            x: (index / 4) % actualPixels.width,
+                            y: Math.floor(index / 4 / actualPixels.width),
+                            actual: Array.from(actualPixels.data.slice(index, index + 4)),
+                            reference: Array.from(expectedPixels.data.slice(index, index + 4)),
+                        });
+                    }
                 }
             }
-            return differingPixels;
+            return { differingPixels, samples };
         },
         { actualPng: actual.toString('base64'), expectedPng: expected.toString('base64') },
     );
-    expect(difference, 'Demo screenshot differs from its reviewed reference HTML').toBe(0);
+    if (typeof difference === 'string' || difference.differingPixels > 0) {
+        await attachDiagnostic(testInfo, 'pixel-differences', {
+            body: JSON.stringify(difference, null, 2),
+            contentType: 'application/json',
+        });
+        await attachDiagnostic(testInfo, 'actual-repeat', {
+            body: await page.screenshot({ animations: 'disabled' }),
+            contentType: 'image/png',
+        });
+        await attachDiagnostic(testInfo, 'reference-repeat', {
+            body: await reference.screenshot({ animations: 'disabled' }),
+            contentType: 'image/png',
+        });
+    }
+    expect(
+        difference.differingPixels,
+        'Demo screenshot differs from its reviewed reference HTML',
+    ).toBe(0);
     await reference.close();
 }
 
