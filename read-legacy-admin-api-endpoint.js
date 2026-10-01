@@ -21,7 +21,7 @@ const GhostAdminAPI = require('@tryghost/admin-api');
 const api = new GhostAdminAPI({
     url,
     key,
-    version
+    version,
 });
 
 (async function main() {
@@ -35,4 +35,4 @@ const api = new GhostAdminAPI({
         console.error('There was an error', require('util').inspect(err, false, null));
         process.exit(1);
     }
-}());
+})();

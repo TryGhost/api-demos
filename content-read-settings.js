@@ -20,11 +20,11 @@ const GhostContentAPI = require('@tryghost/content-api');
 const api = new GhostContentAPI({
     url,
     key,
-    version: 'v2'
+    version: 'v2',
 });
 
 (async function main() {
     let settings = await api.settings.browse();
 
     console.log(settings);
-}());
+})();

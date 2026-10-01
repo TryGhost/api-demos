@@ -34,11 +34,11 @@ const slug = process.argv[4];
     const api = new GhostAdminAPI({
         url,
         key,
-        version: 'canary'
+        version: 'canary',
     });
 
     try {
-        const post = await api.posts.read({slug}, {fields: 'id,slug,updated_at'});
+        const post = await api.posts.read({ slug }, { fields: 'id,slug,updated_at' });
 
         console.log(`${post.slug} will be re-rendered`);
 
@@ -47,8 +47,8 @@ const slug = process.argv[4];
 
             // missing data attributes won't be changed
             // updated_at is required to pass collision detection
-            const postData = {id: post.id, updated_at: post.updated_at};
-            await api.posts.edit(postData, {force_rerender: true});
+            const postData = { id: post.id, updated_at: post.updated_at };
+            await api.posts.edit(postData, { force_rerender: true });
 
             console.log(`\nRe-rendered ${post.slug} \n`);
         }

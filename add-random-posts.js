@@ -24,7 +24,7 @@ console.log(url);
 const api = new GhostAdminAPI({
     url,
     key,
-    version: 'v2'
+    version: 'v2',
 });
 
 (async function main() {
@@ -36,11 +36,11 @@ const api = new GhostAdminAPI({
                 status: 'published',
                 title: loremIpsum({
                     count: 2,
-                    units: 'words'
+                    units: 'words',
                 }),
                 excerpt: loremIpsum({
                     count: 2,
-                    units: 'sentences'
+                    units: 'sentences',
                 }),
                 html: loremIpsum({
                     count: 400, // Number of "words", "sentences", or "paragraphs"
@@ -52,16 +52,16 @@ const api = new GhostAdminAPI({
                     sentenceUpperBound: 15, // Max. number of words per sentence.
                     suffix: '\n', // Line ending, defaults to "\n" or "\r\n" (win32)
                     units: 'paragraphs', // paragraph(s), "sentence(s)", or "word(s)"
-                    words: undefined // Array of words to draw from
+                    words: undefined, // Array of words to draw from
                 }),
                 meta_title: loremIpsum({
                     count: 4,
-                    units: 'words'
+                    units: 'words',
                 }),
                 meta_description: loremIpsum({
                     count: 2,
-                    units: 'sentences'
-                })
+                    units: 'sentences',
+                }),
             };
 
             posts.push(post);
@@ -70,18 +70,18 @@ const api = new GhostAdminAPI({
         console.log(`Adding ${posts.length} posts to ${url}`);
 
         // convert our list of posts, to a list of promises for requests to the api
-        const result = await Promise.mapSeries(posts, async (post) => {
+        const results = await Promise.mapSeries(posts, async (post) => {
             console.log('Adding', post.title);
             // Call the API
-            let result = await api.posts.add(post, {source: 'html'});
+            let result = await api.posts.add(post, { source: 'html' });
 
             // Add a delay but return the original result
             return Promise.delay(5).return(result);
         });
 
-        console.log(`Added ${result.length} posts`);
+        console.log(`Added ${results.length} posts`);
     } catch (err) {
         console.error('There was an error', require('util').inspect(err, false, null));
         process.exit(1);
     }
-}());
+})();
