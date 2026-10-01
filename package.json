@@ -2,8 +2,8 @@
   "name": "admin-api-experiments",
   "version": "0.0.0",
   "license": "MIT",
-  "author": "Ghost Foundation",
   "repository": "git@github.com:TryGhost/admin-api-experiments.git",
+  "author": "Ghost Foundation",
   "main": "app.js",
   "scripts": {
     "dev": "echo \"Implement me!\"",
@@ -14,14 +14,6 @@
     "lint:fix": "oxlint --deny-warnings --fix && oxfmt .",
     "format": "oxfmt ."
   },
-  "dependencies": {
-    "@tryghost/admin-api": "1.14.13",
-    "@tryghost/content-api": "1.12.12",
-    "bluebird": "3.7.2",
-    "jwks-client": "2.1.0",
-    "lodash": "4.18.1",
-    "lorem-ipsum": "3.0.0"
-  },
   "devDependencies": {
     "@playwright/test": "1.63.0",
     "@tryghost/helpers": "1.1.27",
@@ -30,6 +22,14 @@
     "oxlint": "1.86.0",
     "vite": "8.3.1",
     "vitest": "5.0.2"
+  },
+  "dependencies": {
+    "@tryghost/admin-api": "1.14.13",
+    "@tryghost/content-api": "1.12.12",
+    "bluebird": "3.7.2",
+    "jwks-client": "2.1.0",
+    "lodash": "4.18.1",
+    "lorem-ipsum": "3.0.0"
   },
   "packageManager": "pnpm@12.8.1"
 }

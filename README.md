@@ -36,14 +36,14 @@ runs both CLI and browser checks on that same Node version.
 Each demo has usage instructions at the top of its file. Choose the task and
 read those instructions before running it:
 
-| Task                         | Demos                                                                                                                                                                                                |
-| ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Read posts and settings      | [Read posts](read-posts.js), [Content settings](content-read-settings.js), [Legacy subscribers](read-legacy-admin-api-endpoint.js)                                                                   |
-| Create and update posts      | [Random posts](add-random-posts.js), [Add a tag](add-tag-to-all-posts.js), [Find and replace](all-posts-find-and-replace.js), [Write HTML](write-posts.js), [Email cards](write-email-card-posts.js) |
-| Rerender content             | [All posts](force-rerender.js), [One post](force-rerender-single.js), [Request images](request-all-post-images.js)                                                                                   |
-| Manage members and files     | [Bulk member deletion](members-bulk-delete.js), [Upload a file](upload-file.js), [Upload video](upload-video.js)                                                                                     |
-| Look up a signing key        | [JWKS lookup](verify-through-jwks.js)                                                                                                                                                                |
-| Display content in a browser | [Read a post](read-post.html), [Custom reading time](custom-reading-time.html)                                                                                                                       |
+| Task | Demos |
+| --- | --- |
+| Read posts and settings | [Read posts](read-posts.js), [Content settings](content-read-settings.js), [Legacy subscribers](read-legacy-admin-api-endpoint.js) |
+| Create and update posts | [Random posts](add-random-posts.js), [Add a tag](add-tag-to-all-posts.js), [Find and replace](all-posts-find-and-replace.js), [Write HTML](write-posts.js), [Email cards](write-email-card-posts.js) |
+| Rerender content | [All posts](force-rerender.js), [One post](force-rerender-single.js), [Request images](request-all-post-images.js) |
+| Manage members and files | [Bulk member deletion](members-bulk-delete.js), [Upload a file](upload-file.js), [Upload video](upload-video.js) |
+| Look up a signing key | [JWKS lookup](verify-through-jwks.js) |
+| Display content in a browser | [Read a post](read-post.html), [Custom reading time](custom-reading-time.html) |
 
 Most Node demos take the site URL and an API key as positional arguments; the
 header specifies whether a Content or Admin key is required. Rerendering,
