@@ -64,8 +64,8 @@ Every enabled lint rule is an error; rules that do not apply are off.
 `--deny-warnings` also rejects any accidentally introduced warning instead of
 hiding it. Use
 `pnpm lint:fix` for automatic lint fixes and formatting, or `pnpm format` for
-formatting alone. CLI demos allow console output as their user interface;
-configuration and test code retain the no-console rule. HTML demos and their
+formatting alone. Console output is allowed throughout this repository because
+these scripts are examples for exploring the API. HTML demos and their
 independent reference pages are excluded from formatting and remain covered by
 the browser tests. Test-tool updates must pass all required checks on the
 runtime selected by `.nvmrc` before merging.
