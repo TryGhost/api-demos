@@ -2,5 +2,18 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "local>TryGhost/renovate-config"
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/\\.html$/"
+      ],
+      "matchStrings": [
+        "https://unpkg\\.com/(?<depName>@tryghost/(?:content-api|helpers))@(?<currentValue>[^/\\s\"']+)/"
+      ],
+      "datasourceTemplate": "npm",
+      "depTypeTemplate": "dependencies"
+    }
   ]
 }

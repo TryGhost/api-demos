@@ -19,9 +19,9 @@ helpers bundles. They intercept all network requests and assert request options,
 rendered text, error handling and safe handling of post titles. These are unstyled
 API examples, so pixel-level appearance is not a tested contract; screenshot
 comparisons add no useful coverage beyond the behavioural assertions here.
-The HTML CDN URLs are pinned to the tested package versions; update them and
-the browser version assertions together when upgrading those packages. The
-suite does not test unpkg availability or a live Ghost server.
+The browser tests compare HTML CDN pins with installed package versions and
+serve only matching local bundles. The suite does not test unpkg availability
+or a live Ghost server.
 
 ### Tested boundaries
 
@@ -51,13 +51,15 @@ and an up-to-date branch before merging, with the standard Ghost Foundation
 team bypass.
 
 [Renovate](../renovate.json) uses the shared TryGhost default preset, including
-its automerge policy. CI follows `.nvmrc` when Renovate proposes a Node update,
-so the proposed runtime must pass both suites before merging.
+its automerge policy. A custom manager detects unpkg pins in HTML; the shared
+preset groups them with the matching npm dependencies. CI follows `.nvmrc` when
+Renovate proposes a Node update, so the proposed runtime must pass both suites
+before merging.
 
 When changing a demo, extend its acceptance tests at the observable boundary.
-Keep the HTML demos' pinned CDN URLs, installed SDK/helper versions and browser
-version assertions in sync. Assert observable browser behaviour rather than
-pixel-level rendering.
+Keep the HTML demos' pinned CDN URLs and package.json versions in sync; tests
+derive expected versions from installed packages. Assert observable browser
+behaviour rather than pixel-level rendering.
 
 `pnpm lint` runs oxlint correctness and suspicious checks plus oxfmt formatting
 checks for JavaScript files, and is required by CI alongside both test suites.
