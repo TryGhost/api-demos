@@ -15,5 +15,27 @@
       "datasourceTemplate": "npm",
       "depTypeTemplate": "dependencies"
     }
+  ],
+  "customDatasources": {
+    "ghost-node": {
+      "defaultRegistryUrlTemplate": "https://raw.githubusercontent.com/TryGhost/Ghost/main/.nvmrc",
+      "format": "plain"
+    }
+  },
+  "packageRules": [
+    {
+      "description": "Follow the Node version selected by Ghost, including the tooling engine pin.",
+      "matchManagers": [
+        "nvm",
+        "npm"
+      ],
+      "matchPackageNames": [
+        "node"
+      ],
+      "overrideDatasource": "custom.ghost-node",
+      "versioning": "node",
+      "rangeStrategy": "replace",
+      "groupName": "Ghost Node version"
+    }
   ]
 }
