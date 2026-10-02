@@ -74,13 +74,13 @@ pnpm lint                       # JavaScript lint and formatting checks
 pnpm test                       # CLI acceptance tests
 pnpm test:coverage              # CLI tests plus enforced V8 coverage
 pnpm playwright install chromium
-pnpm test:browser               # Browser behaviour and visual regression tests
+pnpm test:browser               # Browser behaviour tests
 ```
 
 On Linux, use `pnpm playwright install --with-deps chromium` to install browser
 system dependencies too. Tests use local fixtures and synthetic credentials.
 See [Testing the demos](docs/testing.md) for the tested boundaries, coverage
-thresholds, browser reference pages, CI gate and lint/format commands.
+thresholds, browser assertions, CI gate and lint/format commands.
 
 # Copyright & License
 

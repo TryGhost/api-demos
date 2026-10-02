@@ -15,15 +15,10 @@ coverage drops below the thresholds in [`.c8rc.json`](../.c8rc.json): 98% lines,
 98% functions and 91% branches. That configuration is the source of truth.
 
 The browser tests execute both HTML demos with the installed Content API and
-helpers bundles. They intercept all network requests and compare screenshots
-with independent, handwritten reference pages rendered in the same browser.
-This checks the visible output without platform-specific screenshot baselines.
-On browser failures, CI retains `test-results/` for seven days, including traces,
-actual/reference screenshots, repeated captures and sampled differing pixel
-values. Download the `browser-failure-diagnostics` artifact from the failed run
-to investigate rendering differences. Repeated captures are diagnostic only;
-they do not retry or override the original comparison.
-
+helpers bundles. They intercept all network requests and assert request options,
+rendered text, error handling and safe handling of post titles. These are unstyled
+API examples, so pixel-level appearance is not a tested contract; screenshot
+comparisons add no useful coverage beyond the behavioural assertions here.
 The HTML CDN URLs are pinned to the tested package versions; update them and
 the browser version assertions together when upgrading those packages. The
 suite does not test unpkg availability or a live Ghost server.
@@ -38,7 +33,7 @@ suite does not test unpkg availability or a live Ghost server.
 | Request post images | Image-card filtering, deduplication, all three sizes, dry run and HTTP failures |
 | Write HTML/email-card posts, upload files/video | Real SDK JSON/multipart requests and rejected writes |
 | JWKS lookup | Real client import, matching public key, missing keys and endpoint errors |
-| Read-post and reading-time HTML | Real browser SDK/helper, query options, output, error paths, literal titles and visual comparisons |
+| Read-post and reading-time HTML | Real browser SDK/helper, query options, output, error paths, literal titles |
 
 These are standalone examples, not an API server or an npm library. There are
 no inbound API endpoints or published build artifacts to validate. Fixture
@@ -61,8 +56,8 @@ so the proposed runtime must pass both suites before merging.
 
 When changing a demo, extend its acceptance tests at the observable boundary.
 Keep the HTML demos' pinned CDN URLs, installed SDK/helper versions and browser
-version assertions in sync. Keep reference pages independent of the demo code
-so a shared rendering bug cannot make a visual comparison pass.
+version assertions in sync. Assert observable browser behaviour rather than
+pixel-level rendering.
 
 `pnpm lint` runs oxlint correctness and suspicious checks plus oxfmt formatting
 checks for JavaScript files, and is required by CI alongside both test suites.
@@ -71,7 +66,6 @@ Every enabled lint rule is an error; rules that do not apply are off.
 hiding it. Use
 `pnpm lint:fix` for automatic lint fixes and formatting, or `pnpm format` for
 formatting alone. Console output is allowed throughout this repository because
-these scripts are examples for exploring the API. HTML demos and their
-independent reference pages are excluded from formatting and remain covered by
-the browser tests. Test-tool updates must pass all required checks on the
+these scripts are examples for exploring the API. HTML demos are excluded from
+formatting and remain covered by the browser tests. Test-tool updates must pass all required checks on the
 runtime selected by `.nvmrc` before merging.
