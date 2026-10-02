@@ -1,10 +1,30 @@
 const { test, expect } = require('@playwright/test');
 const path = require('node:path');
+const fs = require('node:fs');
 
 const root = path.resolve(__dirname, '../..');
+const browserPackages = {
+    '@tryghost/content-api': 'umd/content-api.min.js',
+    '@tryghost/helpers': 'umd/helpers.min.js',
+};
+const bundles = Object.fromEntries(
+    Object.entries(browserPackages).map(([name, bundle]) => [
+        `/${name}@${require(`${name}/package.json`).version}/${bundle}`,
+        path.join(root, 'node_modules', name, bundle),
+    ]),
+);
+
 test('browser CDN versions match the installed packages under test', () => {
-    expect(require('@tryghost/content-api/package.json').version).toBe('1.12.12');
-    expect(require('@tryghost/helpers/package.json').version).toBe('1.1.27');
+    for (const filename of ['read-post.html', 'custom-reading-time.html']) {
+        const html = fs.readFileSync(path.join(root, filename), 'utf8');
+        const urls = [
+            ...html.matchAll(/<script\b[^>]*\bsrc=["'](https:\/\/unpkg\.com\/[^"']+)["']/g),
+        ];
+        expect(urls.length, `${filename} must load its browser dependencies`).toBeGreaterThan(0);
+        for (const [, url] of urls) {
+            expect(Object.keys(bundles), `${filename}: ${url}`).toContain(new URL(url).pathname);
+        }
+    }
 });
 
 const post = {
@@ -32,15 +52,9 @@ async function openDemo(page, filename, { fail = false, posts = readingPosts } =
             return route.fulfill({ path: path.join(root, filename), contentType: 'text/html' });
         }
         if (url.hostname === 'unpkg.com') {
-            const bundles = {
-                '/@tryghost/content-api@1.12.12/umd/content-api.min.js':
-                    'node_modules/@tryghost/content-api/umd/content-api.min.js',
-                '/@tryghost/helpers@1.1.27/umd/helpers.min.js':
-                    'node_modules/@tryghost/helpers/umd/helpers.min.js',
-            };
             if (bundles[url.pathname]) {
                 return route.fulfill({
-                    path: path.join(root, bundles[url.pathname]),
+                    path: bundles[url.pathname],
                     contentType: 'text/javascript; charset=utf-8',
                 });
             }
