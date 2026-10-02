@@ -189,8 +189,8 @@ importers:
         specifier: 1.63.0
         version: 1.63.0
       '@tryghost/helpers':
-        specifier: 1.1.27
-        version: 1.1.27
+        specifier: 1.1.108
+        version: 1.1.108
       c8:
         specifier: 12.0.0
         version: 12.0.0
@@ -584,8 +584,8 @@ packages:
   '@tryghost/content-api@1.12.12':
     resolution: {integrity: sha512-fcyHcVIBDaXdpmR5fteYygqavJGDHuOK0SZv6Z7Uymp8K8XdndQMqShbJ5MptQjwiBBQMHvk/l3VtNNLosd+Ng==}
 
-  '@tryghost/helpers@1.1.27':
-    resolution: {integrity: sha512-5DkGcbJHJopVk1S3zvEzPgy8WAHWysQHhUqVSL0dhfvUITcrQuwcqVERi72r/rT/gixqyb2lNBVIsSo1wevERA==}
+  '@tryghost/helpers@1.1.108':
+    resolution: {integrity: sha512-DQfHspm7plLREg4rgKwkEz8AqU5D7xTciCeuMSKQssb2Dtys4OJi9y/EU1Cmzb5KEtF33GMmVvgdBOm4T2wcAw==}
 
   '@types/chai@5.2.3':
     resolution: {integrity: sha512-Mw558oeA9fFbv65/y4mHtXDs9bPnFMZAL/jxdPFUpOHHIXX91mcgEHbS5Lahr+pwZFR8A7GQleRWeI6cGFC2UA==}
@@ -1507,7 +1507,7 @@ snapshots:
       - debug
       - supports-color
 
-  '@tryghost/helpers@1.1.27':
+  '@tryghost/helpers@1.1.108':
     dependencies:
       lodash-es: 4.18.1
 
