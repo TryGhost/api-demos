@@ -8,9 +8,9 @@ Standalone Ghost API examples; see [README.md](README.md) for usage and
 - Keep credentials synthetic in tests and examples. Never commit real API keys.
 - CLI acceptance tests launch the actual scripts in subprocesses. Preserve c8
   coverage collection: in-process Vitest coverage does not measure those scripts.
-- Browser tests intercept network requests and compare the demos with independent
-  reference pages. Do not derive those references from the implementation under
-  test or replace fixture requests with live Ghost/CDN requests.
+- Browser tests intercept network requests and assert API calls, rendered text,
+  error handling and safe title rendering. Do not replace fixture requests with
+  live Ghost/CDN requests. These unstyled API examples do not need pixel snapshots.
 - When updating browser SDK/helper dependencies, update the HTML CDN URLs and
   browser version assertions together, then run both CLI coverage and browser
   tests. See the README for browser installation commands.
