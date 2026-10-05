@@ -1,11 +1,9 @@
 /**
- * Add a tag to every post
- *
- * Note: Assumes you already have the tag created
+ * List posts with footer code injection but no header code injection
  *
  * Usage:
  *
- * node read-posts.js https://blah.ghost.io ADMIN_API_KEY
+ * node admin-api/read-posts.js https://blah.ghost.io ADMIN_API_KEY
  */
 
 if (process.argv.length < 4) {

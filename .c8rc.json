@@ -1,7 +1,8 @@
 {
   "all": true,
   "include": [
-    "*.js"
+    "admin-api/**/*.js",
+    "content-api/**/*.js"
   ],
   "exclude": [
     ".*.js"

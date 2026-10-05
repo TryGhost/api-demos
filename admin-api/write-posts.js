@@ -8,7 +8,7 @@
  *
  * 1. Set GHOST_API_URL and GHOST_ADMIN_API_KEY in your environment (or edit the inline examples)
  * 2. Make sure the example you want to test is uncommented
- * 3. Run `node ./write-posts.js`
+ * 3. Run `node admin-api/write-posts.js`
  */
 
 // The admin API client is the easiest way to use the API

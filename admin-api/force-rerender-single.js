@@ -1,10 +1,10 @@
 /**
- * Re-renders all posts and pages
+ * Re-renders a single post selected by slug
  *
  * Usage:
  *
- * node force-rerender-single.js https://blah.ghost.io ADMIN_API_KEY slug - dry run
- * node force-rerender-single.js https://blah.ghost.io ADMIN_API_KEY slug true - live run
+ * node admin-api/force-rerender-single.js https://blah.ghost.io ADMIN_API_KEY slug - dry run
+ * node admin-api/force-rerender-single.js https://blah.ghost.io ADMIN_API_KEY slug true - live run
  */
 
 if (process.argv.length < 5) {

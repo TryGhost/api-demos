@@ -16,7 +16,7 @@ const bundles = Object.fromEntries(
 
 test('browser CDN versions match the installed packages under test', () => {
     for (const filename of ['read-post.html', 'custom-reading-time.html']) {
-        const html = fs.readFileSync(path.join(root, filename), 'utf8');
+        const html = fs.readFileSync(path.join(root, 'content-api', filename), 'utf8');
         const urls = [
             ...html.matchAll(/<script\b[^>]*\bsrc=["'](https:\/\/unpkg\.com\/[^"']+)["']/g),
         ];
@@ -48,8 +48,11 @@ async function openDemo(page, filename, { fail = false, posts = readingPosts } =
     page.on('pageerror', (error) => errors.push(error.message));
     await page.route('**/*', async (route) => {
         const url = new URL(route.request().url());
-        if (url.hostname === 'demos.test' && url.pathname === `/${filename}`) {
-            return route.fulfill({ path: path.join(root, filename), contentType: 'text/html' });
+        if (url.hostname === 'demos.test' && url.pathname === `/content-api/${filename}`) {
+            return route.fulfill({
+                path: path.join(root, 'content-api', filename),
+                contentType: 'text/html',
+            });
         }
         if (url.hostname === 'unpkg.com') {
             if (bundles[url.pathname]) {
@@ -91,7 +94,7 @@ async function openDemo(page, filename, { fail = false, posts = readingPosts } =
         unexpected.push(url.href);
         return route.abort();
     });
-    await page.goto(`http://demos.test/${filename}`);
+    await page.goto(`http://demos.test/content-api/${filename}`);
     return { requests, unexpected, errors };
 }
 

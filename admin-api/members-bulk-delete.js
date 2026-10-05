@@ -3,7 +3,7 @@
  *
  * Usage:
  *
- * node members-bulk-delete.js https://blah.ghost.io ADMIN_API_KEY [true]
+ * node admin-api/members-bulk-delete.js https://blah.ghost.io ADMIN_API_KEY [true]
  *
  * If you run this script with just a URL and key, it will do a dry run
  * If you run this script with the extra argument true, the deletions will be executed

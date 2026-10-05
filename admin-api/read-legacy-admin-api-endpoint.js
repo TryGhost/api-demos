@@ -5,7 +5,7 @@
  *
  * Usage:
  *
- * node read-legacy-admin-api-endpoint.js https://blah.ghost.io ADMIN_API_KEY VERSION_NUMBER_TO_SEND_IN_ACCEPT_VERSION_HEADER
+ * node admin-api/read-legacy-admin-api-endpoint.js https://blah.ghost.io ADMIN_API_KEY VERSION_NUMBER_TO_SEND_IN_ACCEPT_VERSION_HEADER
  */
 
 if (process.argv.length < 4) {
