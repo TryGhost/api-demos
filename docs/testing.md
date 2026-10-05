@@ -9,7 +9,7 @@ The CLI tests launch the actual scripts as Node subprocesses and exercise the
 installed SDKs against a loopback HTTP fixture server. They use synthetic
 credentials, never a real Ghost site. c8 collects native V8 coverage from those
 subprocesses; Vitest's in-process coverage provider would not measure the
-scripts launched this way. Every root JavaScript demo is included, including
+scripts launched this way. Every JavaScript demo under `admin-api/` and `content-api/` is included, including
 unexecuted files. Coverage fails the command if line, function or branch
 coverage drops below the thresholds in [`.c8rc.json`](../.c8rc.json): 98% lines,
 98% functions and 91% branches. That configuration is the source of truth.

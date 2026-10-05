@@ -1,6 +1,6 @@
 # API demos
 
-Standalone Ghost API examples; see [README.md](README.md) for usage and
+Standalone Ghost API examples in `admin-api/` and `content-api/`; see [README.md](README.md) for usage and
 [docs/testing.md](docs/testing.md) for validation details.
 
 - Use the fixture-based test commands for validation. Do not run write, upload,

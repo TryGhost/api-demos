@@ -2,6 +2,7 @@ import { afterEach, describe, expect, test } from 'vitest';
 import { createServer } from 'node:http';
 import { generateKeyPairSync } from 'node:crypto';
 import { readdirSync } from 'node:fs';
+import { join } from 'node:path';
 import { adminKey, apiFailure, fixtureApi, root, runDemo } from './helpers/api.mjs';
 
 const servers = [];
@@ -27,37 +28,41 @@ const post = {
     mobiledoc: JSON.stringify({ cards: [['html', { html: '<p>github GITHUB GitHub</p>' }]] }),
 };
 const cliDemos = [
-    'add-random-posts.js',
-    'add-tag-to-all-posts.js',
-    'all-posts-find-and-replace.js',
-    'content-read-settings.js',
-    'force-rerender-single.js',
-    'force-rerender.js',
-    'members-bulk-delete.js',
-    'read-legacy-admin-api-endpoint.js',
-    'read-posts.js',
-    'request-all-post-images.js',
+    'admin-api/add-random-posts.js',
+    'admin-api/add-tag-to-all-posts.js',
+    'admin-api/all-posts-find-and-replace.js',
+    'content-api/content-read-settings.js',
+    'admin-api/force-rerender-single.js',
+    'admin-api/force-rerender.js',
+    'admin-api/members-bulk-delete.js',
+    'admin-api/read-legacy-admin-api-endpoint.js',
+    'admin-api/read-posts.js',
+    'admin-api/request-all-post-images.js',
 ];
 const configuredDemos = [
-    'write-posts.js',
-    'write-email-card-posts.js',
-    'upload-file.js',
-    'upload-video.js',
+    'admin-api/write-posts.js',
+    'admin-api/write-email-card-posts.js',
+    'admin-api/upload-file.js',
+    'admin-api/upload-video.js',
 ];
 const options = (file) =>
-    file === 'upload-file.js'
+    file === 'admin-api/upload-file.js'
         ? ['fixtures/ghost-logo.png', 'fixture-ref']
-        : file === 'upload-video.js'
+        : file === 'admin-api/upload-video.js'
           ? ['fixtures/sample_640x360.mp4', 'fixtures/ghost-logo.png']
           : [];
 
 // Keep newly added demos visible rather than silently omitting them from the suite.
 test('the acceptance inventory covers every standalone Node demo', () => {
     expect(
-        readdirSync(root)
-            .filter((file) => file.endsWith('.js') && !file.startsWith('.'))
+        ['admin-api', 'content-api']
+            .flatMap((directory) =>
+                readdirSync(join(root, directory), { recursive: true })
+                    .filter((file) => file.endsWith('.js'))
+                    .map((file) => `${directory}/${file}`),
+            )
             .toSorted(),
-    ).toEqual([...cliDemos, ...configuredDemos, 'verify-through-jwks.js'].toSorted());
+    ).toEqual([...cliDemos, ...configuredDemos, 'admin-api/verify-through-jwks.js'].toSorted());
 });
 
 test.each(cliDemos)('%s rejects missing required arguments', async (file) => {
@@ -67,27 +72,36 @@ test.each(cliDemos)('%s rejects missing required arguments', async (file) => {
 });
 
 test('single rerender requires a slug', async () => {
-    const result = await runDemo('force-rerender-single.js', ['http://127.0.0.1:1', adminKey]);
+    const result = await runDemo('admin-api/force-rerender-single.js', [
+        'http://127.0.0.1:1',
+        adminKey,
+    ]);
     expect(result.code).toBe(1);
     expect(result.stdout).toContain('post slug');
 });
 
 test.each(cliDemos)('%s reports API failures as a failing command', async (file) => {
     const api = await serve(() => apiFailure);
-    const args = [api.url, file === 'content-read-settings.js' ? 'c'.repeat(26) : adminKey];
-    if (file === 'add-random-posts.js') args.push('1');
-    if (file === 'add-tag-to-all-posts.js' || file === 'force-rerender-single.js')
+    const args = [
+        api.url,
+        file === 'content-api/content-read-settings.js' ? 'c'.repeat(26) : adminKey,
+    ];
+    if (file === 'admin-api/add-random-posts.js') args.push('1');
+    if (
+        file === 'admin-api/add-tag-to-all-posts.js' ||
+        file === 'admin-api/force-rerender-single.js'
+    )
         args.push('fixture-slug');
     const result = await runDemo(file, args);
     expect(result.code).toBe(1);
     expect(result.stderr).toContain('Fixture resource missing');
-    if (file === 'members-bulk-delete.js')
+    if (file === 'admin-api/members-bulk-delete.js')
         expect(result.stdout).toContain('is members actually enabled?');
 });
 
 test('content settings uses the real Content SDK and prints the response', async () => {
     const api = await serve(() => ({ settings: { title: 'Fixture publication' } }));
-    const result = await runDemo('content-read-settings.js', [api.url, 'c'.repeat(26)]);
+    const result = await runDemo('content-api/content-read-settings.js', [api.url, 'c'.repeat(26)]);
     expect(result.code, result.stderr).toBe(0);
     expect(result.stdout).toContain('Fixture publication');
     expect(api.requests).toHaveLength(1);
@@ -103,7 +117,7 @@ test('read-posts selects only posts with foot injection and no head injection', 
             { ...post, id: 'has-head', codeinjection_head: 'head', codeinjection_foot: 'foot' },
         ],
     }));
-    const result = await runDemo('read-posts.js', [api.url, adminKey]);
+    const result = await runDemo('admin-api/read-posts.js', [api.url, adminKey]);
     expect(result.code, result.stderr).toBe(0);
     expect(result.stdout).toContain('match Fixture post null footer-code');
     expect(result.stdout).not.toContain('no-footer');
@@ -116,7 +130,7 @@ test.each([undefined, 'v2.1'])(
     'legacy subscriber read uses requested version %s',
     async (version) => {
         const api = await serve(() => ({ subscribers: [{ email: 'subscriber@example.test' }] }));
-        const result = await runDemo('read-legacy-admin-api-endpoint.js', [
+        const result = await runDemo('admin-api/read-legacy-admin-api-endpoint.js', [
             api.url,
             adminKey,
             ...(version ? [version] : []),
@@ -135,7 +149,7 @@ test.each([
     const api = await serve((request) => ({
         posts: [{ id: 'created', ...request.body.posts[0] }],
     }));
-    const result = await runDemo('add-random-posts.js', [
+    const result = await runDemo('admin-api/add-random-posts.js', [
         api.url,
         adminKey,
         ...(count ? [count] : []),
@@ -162,7 +176,11 @@ test('tagging preserves existing tags and collision timestamp, strips read-only 
         if (req.method === 'GET') return { posts: [post, { ...post, id: 'post-2' }] };
         return { posts: req.body.posts };
     });
-    const result = await runDemo('add-tag-to-all-posts.js', [api.url, adminKey, 'new-tag']);
+    const result = await runDemo('admin-api/add-tag-to-all-posts.js', [
+        api.url,
+        adminKey,
+        'new-tag',
+    ]);
     expect(result.code, result.stderr).toBe(0);
     expect(api.requests[0].url.pathname).toMatch(/\/tags\/slug\/new-tag\/$/);
     const writes = api.requests.filter((req) => req.method === 'PUT');
@@ -181,7 +199,7 @@ test('find-and-replace edits mobiledoc case-insensitively without losing other f
     const api = await serve((req) =>
         req.method === 'GET' ? { posts: [post] } : { posts: req.body.posts },
     );
-    const result = await runDemo('all-posts-find-and-replace.js', [api.url, adminKey]);
+    const result = await runDemo('admin-api/all-posts-find-and-replace.js', [api.url, adminKey]);
     expect(result.code, result.stderr).toBe(0);
     const { id, ...data } = post;
     expect(api.requests[1].url.pathname).toContain(`/posts/${id}/`);
@@ -199,7 +217,7 @@ describe('destructive demos require explicit confirmation', () => {
                 const resource = req.url.pathname.includes('/pages/') ? 'pages' : 'posts';
                 return { [resource]: req.method === 'GET' ? [post] : req.body[resource] };
             });
-            const result = await runDemo('force-rerender.js', [
+            const result = await runDemo('admin-api/force-rerender.js', [
                 api.url,
                 adminKey,
                 ...(confirm ? [confirm] : []),
@@ -218,7 +236,7 @@ describe('destructive demos require explicit confirmation', () => {
         const api = await serve((req) => ({
             posts: req.method === 'GET' ? [post] : req.body.posts,
         }));
-        const result = await runDemo('force-rerender-single.js', [
+        const result = await runDemo('admin-api/force-rerender-single.js', [
             api.url,
             adminKey,
             post.slug,
@@ -257,7 +275,7 @@ describe('destructive demos require explicit confirmation', () => {
             },
         ];
         const api = await serve((req) => (req.method === 'DELETE' ? { status: 204 } : { members }));
-        const result = await runDemo('members-bulk-delete.js', [
+        const result = await runDemo('admin-api/members-bulk-delete.js', [
             api.url,
             adminKey,
             ...(confirm ? [confirm] : []),
@@ -273,9 +291,10 @@ describe('destructive demos require explicit confirmation', () => {
 
 test.each(configuredDemos)('%s exercises its real client and payload', async (file) => {
     const api = await serve((req) => {
-        if (file === 'upload-file.js')
+        if (file === 'admin-api/upload-file.js')
             return { files: [{ url: 'https://example.test/file', ref: 'fixture-ref' }] };
-        if (file === 'upload-video.js') return { media: [{ url: 'https://example.test/video' }] };
+        if (file === 'admin-api/upload-video.js')
+            return { media: [{ url: 'https://example.test/video' }] };
         return { posts: [{ id: 'created', ...req.body.posts[0] }] };
     });
     const result = await runDemo(file, options(file), {
@@ -287,17 +306,17 @@ test.each(configuredDemos)('%s exercises its real client and payload', async (fi
     const req = api.requests[0];
     expect(req.method).toBe('POST');
     expect(req.headers.authorization).toMatch(/^Ghost /);
-    if (file === 'write-posts.js') {
+    if (file === 'admin-api/write-posts.js') {
         expect(req.url.searchParams.get('source')).toBe('html');
         expect(req.body.posts[0].html).toContain('<p>Migrations between platforms');
-    } else if (file === 'write-email-card-posts.js') {
+    } else if (file === 'admin-api/write-email-card-posts.js') {
         const doc = JSON.parse(req.body.posts[0].mobiledoc);
         expect(doc.cards.map((card) => card[1].segment)).toEqual(['status:-free', 'status:free']);
         expect(doc.sections).toContainEqual([10, 1]);
     } else {
         expect(req.headers['content-type']).toContain('multipart/form-data');
         expect(req.raw).toContain('filename="ghost-logo.png"');
-        if (file === 'upload-file.js') {
+        if (file === 'admin-api/upload-file.js') {
             expect(req.url.pathname).toMatch(/\/files\/upload\/$/);
             expect(req.raw).toContain('fixture-ref');
         } else {
@@ -329,7 +348,7 @@ test.each([false, true])(
             ];
             return { posts: [{ ...post, mobiledoc: JSON.stringify({ cards }) }] };
         });
-        const result = await runDemo('request-all-post-images.js', [
+        const result = await runDemo('admin-api/request-all-post-images.js', [
             api.url,
             adminKey,
             ...(live ? ['true'] : []),
@@ -366,7 +385,11 @@ test('image requests ignore non-image and missing sources', async () => {
             },
         ],
     }));
-    const result = await runDemo('request-all-post-images.js', [api.url, adminKey, 'true']);
+    const result = await runDemo('admin-api/request-all-post-images.js', [
+        api.url,
+        adminKey,
+        'true',
+    ]);
     expect(result.code, result.stderr).toBe(0);
     expect(result.stdout).toContain('Found 0 images');
     expect(api.requests).toHaveLength(1);
@@ -387,14 +410,22 @@ test('image HTTP failures produce a failed command', async () => {
               }
             : { status: 500, body: {} },
     );
-    const result = await runDemo('request-all-post-images.js', [api.url, adminKey, 'true']);
+    const result = await runDemo('admin-api/request-all-post-images.js', [
+        api.url,
+        adminKey,
+        'true',
+    ]);
     expect(result.code).toBe(1);
     expect(result.stderr).toContain('Image request failed: 500');
 });
 
 test('invalid mobiledoc fails before requesting images', async () => {
     const api = await serve(() => ({ posts: [{ ...post, mobiledoc: 'invalid-json' }] }));
-    const result = await runDemo('request-all-post-images.js', [api.url, adminKey, 'true']);
+    const result = await runDemo('admin-api/request-all-post-images.js', [
+        api.url,
+        adminKey,
+        'true',
+    ]);
     expect(result.code).toBe(1);
     expect(api.requests).toHaveLength(1);
 });
@@ -409,14 +440,17 @@ describe('JWKS lookup uses the real signing-key client', () => {
     };
     test('prints the matching public key', async () => {
         const api = await serve(() => ({ keys: [jwk] }));
-        const result = await runDemo('verify-through-jwks.js', [api.url, jwk.kid]);
+        const result = await runDemo('admin-api/verify-through-jwks.js', [api.url, jwk.kid]);
         expect(result.code, result.stderr).toBe(0);
         expect(result.stdout.trim()).toBe(publicKey.export({ format: 'pem', type: 'spki' }).trim());
         expect(api.requests[0].url.pathname).toBe('/ghost/.well-known/jwks.json');
     });
     test.each([undefined, 'missing-key'])('fails when key %s is absent', async (kid) => {
         const api = await serve(() => ({ keys: [jwk] }));
-        const result = await runDemo('verify-through-jwks.js', [api.url, ...(kid ? [kid] : [])]);
+        const result = await runDemo('admin-api/verify-through-jwks.js', [
+            api.url,
+            ...(kid ? [kid] : []),
+        ]);
         expect(result.code).toBe(1);
         expect(result.stderr).toMatch(/signing key/i);
     });
@@ -425,7 +459,7 @@ describe('JWKS lookup uses the real signing-key client', () => {
             status: 503,
             body: { message: 'Fixture JWKS unavailable' },
         }));
-        const result = await runDemo('verify-through-jwks.js', [api.url, jwk.kid]);
+        const result = await runDemo('admin-api/verify-through-jwks.js', [api.url, jwk.kid]);
         expect(result.code).toBe(1);
         expect(result.stderr).toContain('Fixture JWKS unavailable');
     });
@@ -461,7 +495,11 @@ test.each(['complete', 'interrupted', 'empty'])('image response stream: %s', asy
                 { ...post, mobiledoc: JSON.stringify({ cards: [['image', { src: imageUrl }]] }) },
             ],
         }));
-        const result = await runDemo('request-all-post-images.js', [api.url, adminKey, 'true']);
+        const result = await runDemo('admin-api/request-all-post-images.js', [
+            api.url,
+            adminKey,
+            'true',
+        ]);
         if (mode === 'interrupted') {
             expect(result.code).toBe(1);
             expect(result.stderr).toContain('There was an error');

@@ -4,7 +4,7 @@
  *
  * Usage:
  *
- * node verify-through-jwks.js $URL $KID
+ * node admin-api/verify-through-jwks.js $URL $KID
  */
 
 // jwks-client v2 is ESM; dynamic import also works from this CommonJS demo.

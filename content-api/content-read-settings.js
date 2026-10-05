@@ -4,7 +4,7 @@
  *
  * Usage:
  *
- * node content-read-settings.js https://blah.ghost.io CONTENT_API_KEY
+ * node content-api/content-read-settings.js https://blah.ghost.io CONTENT_API_KEY
  */
 
 if (process.argv.length < 4) {

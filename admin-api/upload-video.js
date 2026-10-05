@@ -6,9 +6,10 @@
  * To run me:
  *
  * 1. Set GHOST_API_URL and GHOST_ADMIN_API_KEY in your environment (or edit the inline examples)
- * 2. Make sure the example you want to test is uncommented
- * 3. Run `node upload-file.js ./sample_document.pdf some-ID-123`
- *              ^ script name   ^ path to file     ^ reference
+ * 2. Run the example command below; paths are relative to this script directory
+ *
+ * Example command:
+ * node admin-api/upload-video.js "fixtures/sample_640x360.mp4" "fixtures/ghost-logo.png"
  */
 
 // The admin API client is the easiest way to use the API
@@ -19,17 +20,17 @@ const path = require('path');
 const api = new GhostAdminAPI({
     url: process.env.GHOST_API_URL || 'http://localhost:2368',
     // @TODO: edit your key here
-    key: process.env.GHOST_ADMIN_API_KEY || 'YOUR_ADMIN_API_KEY_HERE',
+    key: process.env.GHOST_ADMIN_API_KEY || 'YOUR_ADMIN_API_KEY',
     version: 'canary',
 });
 
 const file = process.argv[2];
-const ref = process.argv[3];
+const thumbnail = process.argv[3];
 
-api.files
+api.media
     .upload({
         file: path.join(__dirname, file),
-        ref,
+        thumbnail: path.join(__dirname, thumbnail),
     })
     .then((response) => console.log(response))
     .catch((error) => {

@@ -5,7 +5,7 @@
  *
  * Usage:
  *
- * node all-posts-find-and-replace.js https://blah.ghost.io ADMIN_API_KEY
+ * node admin-api/all-posts-find-and-replace.js https://blah.ghost.io ADMIN_API_KEY
  */
 
 if (process.argv.length < 4) {

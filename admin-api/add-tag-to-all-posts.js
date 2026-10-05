@@ -5,7 +5,7 @@
  *
  * Usage:
  *
- * node add-tag-to-all-posts.js https://blah.ghost.io ADMIN_API_KEY slug-of-tag-to-add
+ * node admin-api/add-tag-to-all-posts.js https://blah.ghost.io ADMIN_API_KEY slug-of-tag-to-add
  */
 
 if (process.argv.length < 5) {
