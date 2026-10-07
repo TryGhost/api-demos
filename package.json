@@ -31,5 +31,5 @@
     "lodash": "4.18.1",
     "lorem-ipsum": "3.0.0"
   },
-  "packageManager": "pnpm@12.9.0"
+  "packageManager": "pnpm@12.9.1"
 }
