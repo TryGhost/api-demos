@@ -15,7 +15,7 @@
     "format": "oxfmt ."
   },
   "devDependencies": {
-    "@playwright/test": "1.63.0",
+    "@playwright/test": "1.64.0",
     "@tryghost/helpers": "1.1.108",
     "c8": "12.0.0",
     "oxfmt": "0.72.0",
