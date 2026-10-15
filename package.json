@@ -16,7 +16,7 @@
   },
   "devDependencies": {
     "@playwright/test": "1.64.0",
-    "@tryghost/helpers": "1.1.108",
+    "@tryghost/helpers": "1.1.109",
     "c8": "12.0.0",
     "oxfmt": "0.72.0",
     "oxlint": "1.87.0",
@@ -24,8 +24,8 @@
     "vitest": "5.0.4"
   },
   "dependencies": {
-    "@tryghost/admin-api": "1.14.13",
-    "@tryghost/content-api": "1.12.12",
+    "@tryghost/admin-api": "1.14.14",
+    "@tryghost/content-api": "1.12.13",
     "bluebird": "3.7.2",
     "jwks-client": "2.1.0",
     "lodash": "4.18.1",
