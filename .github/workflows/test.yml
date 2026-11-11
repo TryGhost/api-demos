@@ -59,7 +59,9 @@ jobs:
           node-version-file: .nvmrc
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - run: pnpm playwright install --with-deps chromium
+      # No --with-deps: the runner image already has Chromium's system libraries,
+      # and the apt step it adds hangs the job when the Ubuntu mirrors are unreachable.
+      - run: pnpm playwright install chromium
       - run: pnpm test:browser
 
   required-checks-pass:
