@@ -1,0 +1,6 @@
+# test-exclude (via c8) still ranges on the vulnerable glob and minimatch majors.
+# It only uses glob(), glob.sync() and minimatch(), which the patched majors keep.
+# Remove once test-exclude or c8 ships patched ranges.
+overrides:
+  'glob@13': 14.0.4
+  'minimatch@10': 11.0.5
