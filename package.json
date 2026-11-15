@@ -18,8 +18,8 @@
     "@playwright/test": "1.65.0",
     "@tryghost/helpers": "1.1.111",
     "c8": "12.0.0",
-    "oxfmt": "0.76.0",
-    "oxlint": "1.91.0",
+    "oxfmt": "0.78.0",
+    "oxlint": "1.93.0",
     "vite": "8.3.8",
     "vitest": "5.1.0"
   },
