@@ -2,5 +2,5 @@
 # It only uses glob(), glob.sync() and minimatch(), which the patched majors keep.
 # Remove once test-exclude or c8 ships patched ranges.
 overrides:
-  'glob@13': 14.0.4
+  'glob@13': 14.0.6
   'minimatch@10': 11.0.5
